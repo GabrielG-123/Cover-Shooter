@@ -20,12 +20,14 @@ public class SearchState : State
 
     public override void OnEnter()
     {
+        manager.animator.SetLayerWeight(1, 0f);
         LKP = manager.player.transform.position;
         manager.agent.destination = LKP;
         Debug.Log("turning on the bool");
         manager.animator.SetBool("isChasing", true);
         onSearch = manager.onSearch;
         searchTimer = 0;
+
 
 
         if (manager.coverScript.inCover) {

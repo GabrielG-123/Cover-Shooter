@@ -167,6 +167,23 @@ public class StateManager : MonoBehaviour
         zSpeed = localVelocity.z / agent.speed;
 
 
+        if (coverScript.startCoverTimer) { 
+        
+            coverScript.reenterCoverTimer += Time.deltaTime;
+            if(coverScript.reenterCoverTimer >= 5.0f) {
+            
+                coverScript.startCoverTimer = false;
+                coverScript.reenterCoverTimer = 0;
+                coverScript.canTakeCover = true;    
+
+
+
+            }
+
+
+        }
+
+
 
         //  Debug.Log("The agent's speed is: " + agent.speed);
 

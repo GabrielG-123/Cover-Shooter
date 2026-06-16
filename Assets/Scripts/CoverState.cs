@@ -33,7 +33,8 @@ public class CoverState : MonoBehaviour
     public bool canSeePlayer;
     public bool coverShooting = false;
     public bool coverPeek;
-    public bool alreadyEnteredCover;
+    public bool startCoverTimer; // this is used to start a cooldown timer after the agent leaves cover before they can take cover again.
+    public bool canTakeCover = true;
     public float playerAngle;
     public float coverAngle;
     public float coverTimer;
@@ -107,7 +108,7 @@ public class CoverState : MonoBehaviour
     //}
     public bool checkCoverConditions() {
 
-        if (manager.healthScript.health <= 50) {
+        if (manager.healthScript.health <= 50 && canTakeCover) {
 
 
             return true;
@@ -115,7 +116,7 @@ public class CoverState : MonoBehaviour
         }
 
 
-        if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f)) {
+        if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover) {
 
             return true;
         
@@ -290,7 +291,8 @@ public class CoverState : MonoBehaviour
                 manager.animator.SetLayerWeight(1, 0f);
                 Debug.Log("We are here");
                 inCover = false;
-                Debug.Log("inCover is " + inCover);
+                startCoverTimer = true;
+                canTakeCover = false;
 
 
 
@@ -299,6 +301,8 @@ public class CoverState : MonoBehaviour
         
         
         }
+
+
 
 
 
@@ -416,9 +420,10 @@ public class CoverState : MonoBehaviour
 
                 else {
 
-                    Debug.Log("No");
+                    Debug.Log("No, I am hitting: " + localHit.collider.name);
                     coverShooting = false;
                     manager.RigLayers[0].active = true;
+                    Debug.Log("This is happening");
                     manager.animator.SetLayerWeight(1, 1f);
                     manager.animator.SetBool("isShooting", true);
 
