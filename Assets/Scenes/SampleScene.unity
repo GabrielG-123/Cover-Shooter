@@ -783,7 +783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05101698, y: 0.111526415, z: -0.0057331147, w: 0.99243456}
+  m_LocalRotation: {x: 0.05128697, y: 0.04456287, z: -0.0022907942, w: 0.9976866}
   m_LocalPosition: {x: -8.144352, y: 2.307961, z: -5.289285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1460,7 +1460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.051016986, y: 0.11152643, z: -0.0057331156, w: 0.99243456}
+  m_LocalRotation: {x: 0.05128697, y: 0.04456287, z: -0.0022907942, w: 0.9976866}
   m_LocalPosition: {x: -8.144352, y: 2.307961, z: -5.289285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1836,7 +1836,7 @@ GameObject:
   - component: {fileID: 469744015}
   m_Layer: 7
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -6410,10 +6410,14 @@ MonoBehaviour:
   enteringCover: 0
   canSeePlayer: 0
   coverShooting: 0
+  coverPeek: 0
+  startCoverTimer: 0
+  canTakeCover: 1
   playerAngle: 0
   coverAngle: 0
   coverTimer: 0
   backToCover: 0
+  reenterCoverTimer: 0
   rotationTimer: 0
 --- !u!4 &1355080483 stripped
 Transform:
@@ -7637,7 +7641,7 @@ GameObject:
   - component: {fileID: 1741319263}
   - component: {fileID: 1741319262}
   - component: {fileID: 1741319261}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Cover
   m_Icon: {fileID: 0}

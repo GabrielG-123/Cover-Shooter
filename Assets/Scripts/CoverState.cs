@@ -418,7 +418,8 @@ public class CoverState : MonoBehaviour
                 }
 
 
-                else {
+                else if (localHit.transform.CompareTag("Enemy")){
+
 
                     Debug.Log("No, I am hitting: " + localHit.collider.name);
                     coverShooting = false;
@@ -446,80 +447,80 @@ public class CoverState : MonoBehaviour
 
 
 
-        //if (coverShooting)
-        //{
+        if (coverShooting)
+        {
 
-        //    coverTimer += Time.deltaTime;
-
-
-        //    if (coverTimer >= Random.Range(3, 6))
-        //    {
-                
-        //        manager.animator.SetBool("isPeeking", true);
-        //        manager.animator.SetBool("isShooting", true);
-        //        manager.animator.SetLayerWeight(1, 1f);
-        //        manager.RigLayers[0].active = true;
-
-        //        coverPeek = true;
+            coverTimer += Time.deltaTime;
 
 
+            if (coverTimer >= Random.Range(3, 6))
+            {
 
+                manager.animator.SetBool("isPeeking", true);
+                manager.animator.SetBool("isShooting", true);
+                manager.animator.SetLayerWeight(1, 1f);
+                manager.RigLayers[0].active = true;
 
-
-        //    }
-
-
-        //    if (coverPeek)
-        //    {
-
-        //        backToCover += Time.deltaTime;
-
-        //        if (backToCover >= Random.Range(3, 6))
-        //        {
-
-        //            manager.animator.SetBool("isPeeking", false);
-        //            manager.animator.SetBool("isShooting", false);
-        //            manager.animator.SetLayerWeight(1, 0f);
-        //            manager.RigLayers[0].active = false;
-
-
-        //            coverPeek = false;
-
-        //            coverTimer = 0;
-        //            backToCover = 0;
-
-        //        }
-
-
-        //        else if (manager.animator.GetBool("isReloading"))
-        //        {
-
-
-        //            manager.animator.SetBool("isPeeking", false);
-        //            manager.animator.SetBool("isShooting", false);
-        //          //  manager.animator.SetLayerWeight(1, 0f);
-        //           // manager.RigLayers[0].active = false;
-
-
-        //            coverPeek = false;
-
-        //            coverTimer = 0;
-        //            backToCover = 0;
-
-
-        //        }
+                coverPeek = true;
 
 
 
 
 
-
-        //    }
-
+            }
 
 
+            if (coverPeek)
+            {
 
-        //}
+                backToCover += Time.deltaTime;
+
+                if (backToCover >= Random.Range(3, 6))
+                {
+
+                    manager.animator.SetBool("isPeeking", false);
+                    manager.animator.SetBool("isShooting", false);
+                    manager.animator.SetLayerWeight(1, 0f);
+                    manager.RigLayers[0].active = false;
+
+
+                    coverPeek = false;
+
+                    coverTimer = 0;
+                    backToCover = 0;
+
+                }
+
+
+                else if (manager.animator.GetBool("isReloading"))
+                {
+
+
+                    manager.animator.SetBool("isPeeking", false);
+                    manager.animator.SetBool("isShooting", false);
+                    //  manager.animator.SetLayerWeight(1, 0f);
+                    // manager.RigLayers[0].active = false;
+
+
+                    coverPeek = false;
+
+                    coverTimer = 0;
+                    backToCover = 0;
+
+
+                }
+
+
+
+
+
+
+            }
+
+
+
+
+        }
 
 
 

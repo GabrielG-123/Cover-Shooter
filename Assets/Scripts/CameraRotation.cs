@@ -17,14 +17,16 @@ public class CameraRotation : MonoBehaviour
     public Quaternion aimCamRotation;
     public Vector3 initialPosition;
     [SerializeField] Transform shoulderFollow;
+    [SerializeField] PlayerController playerController;
     RaycastHit hit; 
+
    
 
 
     private bool isSnapped = false; 
 
 
-    private PlayerController playerController;
+   
     [SerializeField] WeaponRecoil recoil;
 
 
@@ -33,8 +35,8 @@ public class CameraRotation : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       GameObject player = GameObject.FindWithTag("Player");
-       playerController = player.GetComponentInParent<PlayerController>();
+       
+     
        // animator = playerController.GetComponent<Animator>();
 
         initialPosition = transform.localPosition;
