@@ -33,11 +33,13 @@ public class SearchState : State
         if (manager.coverScript.inCover) {
 
 
-            if (manager.coverScript.checkExitCoverConditions())
+            if (manager.coverScript.CheckExitCoverConditions())
             {
-
+                
 
                 manager.coverScript.ExitCover();
+
+                manager.coverScript.inCover = false;
 
 
             }
@@ -137,7 +139,7 @@ public class SearchState : State
 
     public override void OnExit()
     {
-        Debug.Log("Running this function");
+      //  Debug.Log("Running this function");
         manager.onSearch = false;
         manager.animator.SetBool("isChasing", false);
         manager.animator.SetBool("isSearching", false);

@@ -35,6 +35,7 @@ public class CoverState : MonoBehaviour
     public bool coverPeek;
     public bool startCoverTimer; // this is used to start a cooldown timer after the agent leaves cover before they can take cover again.
     public bool canTakeCover = true;
+    public bool alreadyTookCover = false;
     public float playerAngle;
     public float coverAngle;
     public float coverTimer;
@@ -106,14 +107,14 @@ public class CoverState : MonoBehaviour
     //{
     //    manager = stateManager;
     //}
-    public bool checkCoverConditions() {
+    public bool CheckCoverConditions() {
 
-        if (manager.healthScript.health <= 50 && canTakeCover) {
+        //if (manager.healthScript.health <= 50 && canTakeCover) {
 
 
-            return true;
+        //    return true;
         
-        }
+        //}
 
 
         if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover) {
@@ -129,7 +130,7 @@ public class CoverState : MonoBehaviour
     }
 
 
-    public bool checkExitCoverConditions() {
+    public bool CheckExitCoverConditions() {
 
         if (manager.onSearch) {
 
@@ -245,6 +246,7 @@ public class CoverState : MonoBehaviour
        manager.animator.SetLayerWeight(1, 0f);
 
         manager.animator.SetBool("isShooting", false);
+        manager.animator.SetBool("strafing", false);
         if (playerAngle > 0f && (coverAngle <= -0.99f))
         {
             //Debug.Log("This is true");
@@ -280,17 +282,32 @@ public class CoverState : MonoBehaviour
 
     public void ExitCover()
     {
+
+        Debug.Log("We are in this function");
+
+        if (!alreadyTookCover) {
+
+            alreadyTookCover = true;
+        
+        }
         Debug.Log("This should run");
 
         if (inCover) {
 
+            coverPeek = false;
+            Debug.Log("We are in cover, trying to exit");
             if (!coverPeek) {
-                Debug.Log("This should happen");
+
+                Debug.Log("We are not peeking, exiting cover");
+                inCover = false;
+                Debug.Log("inCover is: " + inCover);;
+                manager.animator.SetBool("takeCover", false);
+                Debug.Log("status of takeCover is: " + manager.animator.GetBool("takeCover"));
                 manager.animator.SetBool("exitCover", true);
                 manager.RigLayers[0].active = false;
                 manager.animator.SetLayerWeight(1, 0f);
                 Debug.Log("We are here");
-                inCover = false;
+               
                 startCoverTimer = true;
                 canTakeCover = false;
 
@@ -374,12 +391,12 @@ public class CoverState : MonoBehaviour
 
                 oppositeNormal = -coverHit.normal;
                 coverRotation = Quaternion.LookRotation(oppositeNormal, Vector3.up);
-
+                Debug.Log("Doing this currently");
                 manager.animator.SetBool("takeCover", true);
 
 
-                
 
+                Debug.Log("Yup, true");
                 inCover = true;
 
             
@@ -402,7 +419,7 @@ public class CoverState : MonoBehaviour
 
         Debug.DrawRay(manager.player.transform.position + new Vector3(0, 1.0f, 0), -manager.direction * 20f, Color.green);
 
-
+        Debug.Log("Still running this function");
         if (inCover && !coverPeek)
         {
 

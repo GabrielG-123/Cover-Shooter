@@ -167,14 +167,16 @@ public class StateManager : MonoBehaviour
         zSpeed = localVelocity.z / agent.speed;
 
 
-        if (coverScript.startCoverTimer) { 
-        
+        if (coverScript.startCoverTimer)
+        {
+
             coverScript.reenterCoverTimer += Time.deltaTime;
-            if(coverScript.reenterCoverTimer >= 5.0f) {
-            
+            if (coverScript.reenterCoverTimer >= 5.0f)
+            {
+
                 coverScript.startCoverTimer = false;
                 coverScript.reenterCoverTimer = 0;
-                coverScript.canTakeCover = true;    
+                coverScript.canTakeCover = true;
 
 
 
@@ -182,6 +184,18 @@ public class StateManager : MonoBehaviour
 
 
         }
+        else {
+
+            if (coverScript.alreadyTookCover)
+            {
+                coverScript.canTakeCover = false;
+
+
+            }
+        
+        }
+
+      
 
 
 

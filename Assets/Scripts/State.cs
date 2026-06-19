@@ -49,7 +49,7 @@ public abstract class State
 
                 if (hit.transform.CompareTag("Player")) {
 
-                    Debug.Log("Hitting the player");
+                   // Debug.Log("Hitting the player");
                 
                 }
 
@@ -92,7 +92,7 @@ public abstract class State
 
         else if (_manager.alertMeter > 0)
         {
-            Debug.Log("not hitting the player");
+           // Debug.Log("not hitting the player");
             _manager.alertMeter -= 5.0f;
 
 

@@ -28,13 +28,13 @@ public override State RunCurrentState()
     {
 
 
-        if (manager.coverScript.checkCoverConditions() && !manager.coverScript.foundCover) {
+        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.foundCover) {
 
             manager.coverScript.FindCover();
         
         }
 
-        if (manager.coverScript.checkCoverConditions() && !manager.coverScript.inCover) {
+        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover) {
 
             manager.coverScript.MovingToCover();
         

@@ -23,6 +23,8 @@ public class ShootingState : State
         manager.animator.SetBool("isAiming", true);
         manager.animator.SetBool("isShooting", true);
 
+
+
         manager.RigLayers[0].active = true;
     }
 
@@ -30,16 +32,16 @@ public class ShootingState : State
     {
 
 
-        if (manager.coverScript.checkCoverConditions() && !manager.coverScript.foundCover)
+        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.foundCover)
         {
-
+            Debug.Log("Yes, this is actually happening");
             manager.coverScript.FindCover();
 
         }
 
-        if (manager.coverScript.checkCoverConditions() && !manager.coverScript.inCover)
+        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover)
         {
-
+            Debug.Log("I am moving to cover");
             manager.coverScript.MovingToCover();
 
 
@@ -48,7 +50,8 @@ public class ShootingState : State
 
         if (manager.coverScript.inCover)
         {
-
+            Debug.Log("The status of inCover is: " + manager.coverScript.inCover);  
+            Debug.Log("Happening currently");
             manager.coverScript.coverShootCheck();
 
 
@@ -101,6 +104,8 @@ public class ShootingState : State
         {
             if (manager.burstShotsFired < manager.myGun.burstRounds && !manager.coverScript.enteringCover)
             {
+
+                Debug.Log("I am firing at the player");
                 manager.myGun.Shoot();
                 manager.burstShotsFired++;
                 //Debug.Log("the burst shots fired: " + burstShotsFired);

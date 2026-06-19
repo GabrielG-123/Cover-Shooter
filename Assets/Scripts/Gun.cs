@@ -109,7 +109,7 @@ public class Gun : MonoBehaviour
         crosshairHeight = crosshairTransform.sizeDelta.y;
 
         //layerMask = LayerMask.GetMask("Hitbox");
-        Debug.Log("Layer mask " + layerMask.value);
+      //  Debug.Log("Layer mask " + layerMask.value);
 
 
 
@@ -282,7 +282,7 @@ public class Gun : MonoBehaviour
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(layerIndex).IsName("Reload"));
         float animationLength = animator.GetCurrentAnimatorStateInfo(layerIndex).length;
         yield return new WaitForSeconds(animationLength - 0.25f);
-        Debug.Log("We are here");
+       // Debug.Log("We are here");
         leftHandIK.weight = 1f;
         gunAimConstraint.weight = initialgunAimWeight;
         RightShoulderAimConstraint.weight = initialRightShoulderWeight;

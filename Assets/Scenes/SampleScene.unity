@@ -783,7 +783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05128697, y: 0.04456287, z: -0.0022907942, w: 0.9976866}
+  m_LocalRotation: {x: 0.05125572, y: 0.056547996, z: -0.0029068987, w: 0.99707913}
   m_LocalPosition: {x: -8.144352, y: 2.307961, z: -5.289285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1460,7 +1460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05128697, y: 0.04456287, z: -0.0022907942, w: 0.9976866}
+  m_LocalRotation: {x: 0.05125573, y: 0.056548003, z: -0.0029068994, w: 0.99707913}
   m_LocalPosition: {x: -8.144352, y: 2.307961, z: -5.289285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6178,6 +6178,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
       propertyPath: m_Controller
       value: 
@@ -6413,6 +6417,7 @@ MonoBehaviour:
   coverPeek: 0
   startCoverTimer: 0
   canTakeCover: 1
+  alreadyTookCover: 0
   playerAngle: 0
   coverAngle: 0
   coverTimer: 0
@@ -7452,6 +7457,7 @@ MonoBehaviour:
   aimCamRotation: {x: 0, y: 0, z: 0, w: 0}
   initialPosition: {x: 0, y: 0, z: 0}
   shoulderFollow: {fileID: 1005668265}
+  playerController: {fileID: 1297998448}
   recoil: {fileID: 1472146645}
   animator: {fileID: 1839985259}
 --- !u!4 &1700401582 stripped
