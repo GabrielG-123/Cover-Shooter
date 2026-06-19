@@ -22,6 +22,7 @@ public class ShootingState : State
      //   Debug.Log("Entering shooting state");
         manager.animator.SetBool("isAiming", true);
         manager.animator.SetBool("isShooting", true);
+        //manager.firing = true;
 
 
 
@@ -140,7 +141,7 @@ public class ShootingState : State
 
         }
 
-        if (Vector3.Distance(manager.agent.transform.position, manager.player.transform.position) >= 20.0f) {
+        if (Vector3.Distance(manager.agent.transform.position, manager.player.transform.position) >= 20.0f && !manager.coverScript.foundCover) {
           //  Debug.Log("I am no longer shooting at the player");
 
             manager.onSearch = true;

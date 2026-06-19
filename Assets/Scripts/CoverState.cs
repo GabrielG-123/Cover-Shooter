@@ -167,7 +167,7 @@ public class CoverState : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 20.0f);
 
 
-
+        
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Cover"))
@@ -234,9 +234,9 @@ public class CoverState : MonoBehaviour
 
     public void EnterCover() {
 
-        
 
 
+        foundCover = false;
         enteringCover = true;
         manager.RigLayers[0].active = false;
         Sequence coverSequence = DOTween.Sequence(); //start DOTween timeline
@@ -293,7 +293,7 @@ public class CoverState : MonoBehaviour
         Debug.Log("This should run");
 
         if (inCover) {
-
+            coverShooting = false;
             coverPeek = false;
             Debug.Log("We are in cover, trying to exit");
             if (!coverPeek) {
