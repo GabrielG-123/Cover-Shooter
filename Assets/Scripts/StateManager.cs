@@ -167,33 +167,33 @@ public class StateManager : MonoBehaviour
         zSpeed = localVelocity.z / agent.speed;
 
 
-        if (coverScript.startCoverTimer)
-        {
+        //if (coverScript.startCoverTimer)
+        //{
 
-            coverScript.reenterCoverTimer += Time.deltaTime;
-            if (coverScript.reenterCoverTimer >= 5.0f)
-            {
+        //    coverScript.reenterCoverTimer += Time.deltaTime;
+        //    if (coverScript.reenterCoverTimer >= 5.0f)
+        //    {
 
-                coverScript.startCoverTimer = false;
-                coverScript.reenterCoverTimer = 0;
-                coverScript.canTakeCover = true;
-
-
-
-            }
+        //        coverScript.startCoverTimer = false;
+        //        coverScript.reenterCoverTimer = 0;
+        //        coverScript.canTakeCover = true;
 
 
-        }
-        else {
 
-            if (coverScript.alreadyTookCover)
-            {
-                coverScript.canTakeCover = false;
+        //    }
 
 
-            }
+        //}
+        //else {
+
+        //    if (coverScript.alreadyTookCover)
+        //    {
+        //        coverScript.canTakeCover = false;
+
+
+        //    }
         
-        }
+        //}
 
       
 

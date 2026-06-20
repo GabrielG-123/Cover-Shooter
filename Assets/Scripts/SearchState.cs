@@ -41,6 +41,9 @@ public class SearchState : State
 
                 manager.coverScript.inCover = false;
 
+               // manager.animator.SetBool("exitCover", false);
+
+                
 
             }
 

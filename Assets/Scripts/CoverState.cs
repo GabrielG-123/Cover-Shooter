@@ -101,7 +101,52 @@ public class CoverState : MonoBehaviour
         coverAngle = Vector3.Dot(oppositeNormal, closestCover.transform.forward);
 
 
-       
+
+        if (startCoverTimer)
+        {
+
+            reenterCoverTimer += Time.deltaTime;
+            if (reenterCoverTimer >= 5.0f)
+            {
+                canTakeCover = true;
+                startCoverTimer = false;
+                reenterCoverTimer = 0;
+                
+
+
+
+            }
+
+
+
+           
+
+
+        }
+
+
+        //if (manager.animator.GetCurrentAnimatorStateInfo(0).IsName("Cover To Stand")) { 
+        
+        //        manager.animator.SetBool("exitCover", false);
+
+
+        //}
+
+      
+        //else
+        //{
+
+        //    if (alreadyTookCover )
+        //    {
+        //        canTakeCover = false;
+
+
+        //    }
+
+        //}
+
+
+
     }
     //public CoverState(StateManager stateManager) : base(stateManager)
     //{
@@ -237,6 +282,7 @@ public class CoverState : MonoBehaviour
 
 
         foundCover = false;
+        Debug.Log("yes, here");
         enteringCover = true;
         manager.RigLayers[0].active = false;
         Sequence coverSequence = DOTween.Sequence(); //start DOTween timeline
@@ -320,6 +366,12 @@ public class CoverState : MonoBehaviour
         }
 
 
+       
+
+
+
+
+
 
 
 
@@ -338,6 +390,21 @@ public class CoverState : MonoBehaviour
 
 
 
+    }
+
+
+    public void ExitCoverAnimation() {
+
+
+        if (!inCover) { 
+        
+        
+            manager.animator.SetBool("exitCover", false);   
+
+
+        }
+    
+    
     }
 
 

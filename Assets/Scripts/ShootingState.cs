@@ -103,6 +103,8 @@ public class ShootingState : State
          
         if (manager.firing == true && manager.animator.GetBool("isShooting"))
         {
+
+            Debug.Log("here");
             if (manager.burstShotsFired < manager.myGun.burstRounds && !manager.coverScript.enteringCover)
             {
 
