@@ -36,11 +36,14 @@ public class CoverState : MonoBehaviour
     public bool startCoverTimer; // this is used to start a cooldown timer after the agent leaves cover before they can take cover again.
     public bool canTakeCover = true;
     public bool alreadyTookCover = false;
+    public bool isAggro;
+    public bool isDefensive;
     public float playerAngle;
     public float coverAngle;
     public float coverTimer;
     public float backToCover;
     public float reenterCoverTimer;
+    [SerializeField] float healthBeforeCover;
 
     public NavMeshHit navHit;
 
@@ -54,6 +57,11 @@ public class CoverState : MonoBehaviour
     private void Awake()
     {
                 manager = GetComponent<StateManager>();
+    }
+
+    private void Start()
+    {
+        healthBeforeCover = manager.healthScript.health;
     }
 
 
@@ -154,20 +162,30 @@ public class CoverState : MonoBehaviour
     //}
     public bool CheckCoverConditions() {
 
-        //if (manager.healthScript.health <= 50 && canTakeCover) {
 
 
-        //    return true;
-        
-        //}
+        if (manager.healthScript.health <= (healthBeforeCover * 0.5f) && canTakeCover)
+        {
+
+            isDefensive = true;
+            return true;
+
+        }
 
 
         if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover) {
 
+
+            isDefensive = true;
             return true;
         
         
+
         }
+
+
+
+
 
         return false;
     
@@ -261,13 +279,13 @@ public class CoverState : MonoBehaviour
 
 
             }
-            
-
-           
-           // Debug.Log("The status of the path is:" + manager.agent.pathStatus);
 
 
 
+            // Debug.Log("The status of the path is:" + manager.agent.pathStatus);
+
+
+            Debug.Log("Yes, this");
             foundCover = true;
 
 
@@ -279,7 +297,13 @@ public class CoverState : MonoBehaviour
 
     public void EnterCover() {
 
+        healthBeforeCover = manager.healthScript.health;
 
+        if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f)) {
+            
+            manager.myGun.reload(1);
+
+        }
 
         foundCover = false;
         Debug.Log("yes, here");
@@ -288,10 +312,20 @@ public class CoverState : MonoBehaviour
         Sequence coverSequence = DOTween.Sequence(); //start DOTween timeline
        coverSequence.Append(manager.agent.transform.DOMove(coverHit.point, 0.5f));
        coverSequence.Append(manager.agent.transform.DORotateQuaternion(coverRotation, 0.5f));
-       
-       manager.animator.SetLayerWeight(1, 0f);
 
-        manager.animator.SetBool("isShooting", false);
+        if (manager.animator.GetBool("isReloading")) { 
+            manager.animator.SetLayerWeight(1, 1f);
+        }
+
+        else
+          {
+
+            manager.animator.SetLayerWeight(1, 0f);
+
+        }
+
+
+            manager.animator.SetBool("isShooting", false);
         manager.animator.SetBool("strafing", false);
         if (playerAngle > 0f && (coverAngle <= -0.99f))
         {
@@ -379,7 +413,7 @@ public class CoverState : MonoBehaviour
 
     }
 
-    public void finishCoverAnimation() {
+    public void FinishCoverAnimation() {
 
 
         enteringCover = false;
@@ -446,8 +480,8 @@ public class CoverState : MonoBehaviour
       //  Debug.DrawRay(manager.agent.transform.position, distanceToCover * 5.0f, Color.red);
        // Debug.DrawRay(manager.player.transform.position, directionToCover * 5.0f, Color.green);
             
-            manager.animator.SetFloat(manager.MoveXHash, Mathf.Clamp(manager.localVelocity.x, -1f, 1f));
-        manager.animator.SetFloat(manager.MoveZHash, Mathf.Clamp(manager.localVelocity.z, -1f, 1f));
+        //    manager.animator.SetFloat(manager.MoveXHash, Mathf.Clamp(manager.localVelocity.x, -1f, 1f));
+        //manager.animator.SetFloat(manager.MoveZHash, Mathf.Clamp(manager.localVelocity.z, -1f, 1f));
 
 
         if (manager.agent.remainingDistance == manager.agent.stoppingDistance && !manager.agent.pathPending) {

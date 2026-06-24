@@ -154,7 +154,8 @@ public class StateManager : MonoBehaviour
         localVelocity = transform.InverseTransformDirection(agent.velocity);
 
 
-
+        animator.SetFloat(MoveXHash, Mathf.Clamp(localVelocity.x, -1f, 1f));
+        animator.SetFloat(MoveZHash, Mathf.Clamp(localVelocity.z, -1f, 1f));
 
 
 

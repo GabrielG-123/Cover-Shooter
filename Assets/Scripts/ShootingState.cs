@@ -7,6 +7,7 @@ public class ShootingState : State
     float rotationTimer;
     //float burstShotsFired = 0;
     float timeSinceLastShot = 0;
+    private Vector3 aggroPoint;
 
 
     public ShootingState(StateManager stateManager) : base(stateManager)
@@ -29,11 +30,31 @@ public class ShootingState : State
         manager.RigLayers[0].active = true;
     }
 
+
+    public void aggroMovement() { 
+    
+            if(manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f)
+            {
+
+
+            aggroPoint = Random.insideUnitSphere * 10 + manager.player.transform.position;
+            manager.agent.SetDestination(aggroPoint);
+            Debug.Log("I am moving to the aggro point: " + aggroPoint);
+            manager.animator.SetBool("strafing", true);
+            manager.coverScript.isAggro = true;
+            }
+            
+
+
+
+    }
+
     public override State RunCurrentState()
     {
 
+        aggroMovement();
 
-        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.foundCover)
+        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover && !manager.coverScript.foundCover)
         {
             Debug.Log("Yes, this is actually happening");
             manager.coverScript.FindCover();
@@ -143,7 +164,7 @@ public class ShootingState : State
 
         }
 
-        if (Vector3.Distance(manager.agent.transform.position, manager.player.transform.position) >= 20.0f && !manager.coverScript.foundCover) {
+        if (manager.distanceFromPlayer >= 20.0f && !manager.coverScript.foundCover) {
           //  Debug.Log("I am no longer shooting at the player");
 
             manager.onSearch = true;

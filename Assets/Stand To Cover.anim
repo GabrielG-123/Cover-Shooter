@@ -43874,9 +43874,9 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.2666667
-    functionName: finishCoverAnimation
+    functionName: FinishCoverAnimation
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 919132149155446097, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
