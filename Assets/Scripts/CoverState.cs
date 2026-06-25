@@ -160,36 +160,29 @@ public class CoverState : MonoBehaviour
     //{
     //    manager = stateManager;
     //}
-    public bool CheckCoverConditions() {
+    public bool CheckCoverConditions()
+    {
 
 
 
-        if (manager.healthScript.health <= (healthBeforeCover * 0.5f) && canTakeCover)
+        if (manager.healthScript.health <= (healthBeforeCover * 0.5f) && canTakeCover )
         {
-
-            isDefensive = true;
-            return true;
-
+            if (!isAggro)
+            {
+                isDefensive = true;
+                return true;
+            }
         }
-
-
-        if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover) {
-
-
-            isDefensive = true;
-            return true;
-        
-        
-
+        if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover)
+        {
+            if (!isAggro)
+            {
+                isDefensive = true;
+                return true;
+            }
         }
-
-
-
-
-
+        isDefensive = false;
         return false;
-    
-    
     }
 
 
@@ -362,6 +355,9 @@ public class CoverState : MonoBehaviour
 
     public void ExitCover()
     {
+
+
+        isDefensive = false;
 
         Debug.Log("We are in this function");
 

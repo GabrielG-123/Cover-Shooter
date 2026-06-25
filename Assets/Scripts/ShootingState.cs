@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShootingState : State
 {
@@ -31,20 +32,51 @@ public class ShootingState : State
     }
 
 
-    public void aggroMovement() { 
-    
+    public void AggroMovement() {
+        if (!manager.coverScript.isDefensive && !manager.coverScript.inCover) {         
             if(manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f)
             {
 
+                if (manager.coverScript.CheckCoverConditions())
+                {
+                    Debug.Log("I am not aggroing the player");
+                    manager.coverScript.isAggro = false;
 
-            aggroPoint = Random.insideUnitSphere * 10 + manager.player.transform.position;
-            manager.agent.SetDestination(aggroPoint);
-            Debug.Log("I am moving to the aggro point: " + aggroPoint);
-            manager.animator.SetBool("strafing", true);
-            manager.coverScript.isAggro = true;
+
+
+                }
+
+                else
+                {
+
+
+                    manager.coverScript.isAggro = true;
+
+
+                }
+                if (manager.agent.remainingDistance <= manager.agent.stoppingDistance  && !manager.agent.pathPending)
+            {
+                aggroPoint = Random.insideUnitSphere * 10 + manager.player.transform.position;
+                aggroPoint.y = manager.agent.transform.position.y;
+
+                if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 2f, NavMesh.AllAreas))
+                {
+                    Vector3 realAggroPoint = navHit.position;
+                    manager.agent.SetDestination(realAggroPoint);
+                }
             }
-            
 
+            
+            Debug.Log("I am moving to the aggro point: " + aggroPoint);
+
+            manager.animator.SetBool("strafing", true);
+
+
+               
+
+
+            }
+        }
 
 
     }
@@ -52,10 +84,11 @@ public class ShootingState : State
     public override State RunCurrentState()
     {
 
-        aggroMovement();
+        AggroMovement();
 
         if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover && !manager.coverScript.foundCover)
         {
+            Debug.Log("The status of CheckCoverConditions is: " + manager.coverScript.CheckCoverConditions());
             Debug.Log("Yes, this is actually happening");
             manager.coverScript.FindCover();
 
