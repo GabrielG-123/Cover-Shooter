@@ -45,6 +45,10 @@ public class CoverState : MonoBehaviour
     public float reenterCoverTimer;
     [SerializeField] float healthBeforeCover;
     [SerializeField] bool arrivedAtAggroPoint;
+    [SerializeField] float aggroTimer;
+    [SerializeField] float aggroDuration;
+
+
 
     public NavMeshHit navHit;
 
@@ -72,6 +76,9 @@ public class CoverState : MonoBehaviour
        // Debug.Log("The agent is in cover: " + inCover);
        // Debug.Log("The agent's rotation is being updated" + manager.agent.updateRotation);
        arrivedAtAggroPoint = manager.attackState.shootingState.arrivedAtAggroPoint;
+        aggroTimer = manager.attackState.shootingState.aggroTimer;
+        aggroDuration = manager.attackState.shootingState.aggroDuration;
+
 
         if (Physics.Raycast(manager.head.position, manager.direction, out hit, 15)) {
 

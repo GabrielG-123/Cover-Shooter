@@ -9,8 +9,8 @@ public class ShootingState : State
     //float burstShotsFired = 0;
     float timeSinceLastShot = 0;
     private Vector3 aggroPoint;
-    private float aggroTimer;
-    private float aggroDuration;
+    public float aggroTimer;
+    public float aggroDuration;
     public bool arrivedAtAggroPoint;
     private bool hasPreviousPath = false;
 
@@ -41,6 +41,21 @@ public class ShootingState : State
             if(manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f)
             {
 
+                if (!hasPreviousPath)
+                {
+
+                    Debug.Log("Doing this");
+                    Vector2 randomCircle = Random.insideUnitCircle * 10f;
+                    aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
+
+                    if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 5f, NavMesh.AllAreas))
+                    {
+                        manager.agent.SetDestination(navHit.position);
+                        hasPreviousPath = true;
+                    }
+
+                }
+
                 if (manager.coverScript.CheckCoverConditions())
                 {
                     Debug.Log("I am not aggroing the player");
@@ -61,7 +76,18 @@ public class ShootingState : State
             }
             if (manager.agent.remainingDistance <= manager.agent.stoppingDistance && !manager.agent.pathPending && manager.coverScript.isAggro)
             {
+                Debug.Log("currently running this");
+                if (!arrivedAtAggroPoint)
+                {
+                    Debug.Log("arriving at the point");
+                    aggroDuration = Random.Range(1.0f, 3.0f);
+                    Debug.Log("Trvke");
+                    aggroTimer = 0f;
+                    arrivedAtAggroPoint = true;
+                    Debug.Log("arrived at aggro point is: " + arrivedAtAggroPoint);
 
+                }
+                Debug.Log("This is running now as well");
 
 
                 Debug.Log("This is running now");
@@ -69,28 +95,16 @@ public class ShootingState : State
                 // Only set a new destination if needed
                 if ((!manager.agent.hasPath || manager.agent.velocity.sqrMagnitude < 0.01f) && hasPreviousPath)
                 {
-
-                    Debug.Log("currently running this");
-                    if (!arrivedAtAggroPoint)
-                    {
-                        Debug.Log("arriving at the point");
-                        aggroDuration = Random.Range(1.0f, 3.0f);
-                        arrivedAtAggroPoint = true;
-                        Debug.Log("arrived at aggro point is: " + arrivedAtAggroPoint);
-
-                    }
-                    Debug.Log("This is running now as well");
-                }
-                else
-                {
-
                     if (arrivedAtAggroPoint)
                     {
-
+                        
                         aggroTimer += Time.deltaTime;
 
                         if (aggroTimer >= aggroDuration)
                         {
+                            arrivedAtAggroPoint = false;
+
+                            
                             if (manager.coverScript.CheckCoverConditions())
                             {
                                 Debug.Log("I am not aggroing the player");
@@ -98,33 +112,35 @@ public class ShootingState : State
 
                             }
 
-                            else if (manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f) { 
-                            
-                                    manager.coverScript.isAggro = true;
+                            else if (manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f)
+                            {
+                                Vector2 randomCircle = Random.insideUnitCircle * 10f;
+                                aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
+
+                                if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 5f, NavMesh.AllAreas))
+                                {
+                                    manager.agent.SetDestination(navHit.position);
+                                    hasPreviousPath = true;
+                                }
+                                manager.coverScript.isAggro = true;
 
 
                             }
 
 
-                                Debug.Log("I am moving to a new aggro point");
-                            arrivedAtAggroPoint = false;
+                            Debug.Log("I am moving to a new aggro point");
+                            // arrivedAtAggroPoint = false;
                         }
                     }
                 }
+                
+
+                    
+             }
+              
 
 
-                if (!hasPreviousPath || (arrivedAtAggroPoint && aggroTimer >= aggroDuration))
-                {
-                    Vector2 randomCircle = Random.insideUnitCircle * 10f;
-                    aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
-
-                    if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 5f, NavMesh.AllAreas))
-                    {
-                        manager.agent.SetDestination(navHit.position);
-                        hasPreviousPath = true;
-                    }
-
-                }
+               
             }
 
                 
@@ -141,7 +157,7 @@ public class ShootingState : State
         }
 
 
-    }
+    
 
     public override State RunCurrentState()
     {
