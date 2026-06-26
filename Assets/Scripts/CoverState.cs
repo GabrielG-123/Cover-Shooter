@@ -44,6 +44,7 @@ public class CoverState : MonoBehaviour
     public float backToCover;
     public float reenterCoverTimer;
     [SerializeField] float healthBeforeCover;
+    [SerializeField] bool arrivedAtAggroPoint;
 
     public NavMeshHit navHit;
 
@@ -70,7 +71,7 @@ public class CoverState : MonoBehaviour
        // Debug.Log("Entering cover: " + enteringCover);
        // Debug.Log("The agent is in cover: " + inCover);
        // Debug.Log("The agent's rotation is being updated" + manager.agent.updateRotation);
-
+       arrivedAtAggroPoint = manager.attackState.shootingState.arrivedAtAggroPoint;
 
         if (Physics.Raycast(manager.head.position, manager.direction, out hit, 15)) {
 
@@ -167,19 +168,17 @@ public class CoverState : MonoBehaviour
 
         if (manager.healthScript.health <= (healthBeforeCover * 0.5f) && canTakeCover )
         {
-            if (!isAggro)
-            {
+            
                 isDefensive = true;
                 return true;
-            }
+            
         }
         if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover)
         {
-            if (!isAggro)
-            {
+            
                 isDefensive = true;
                 return true;
-            }
+            
         }
         isDefensive = false;
         return false;
