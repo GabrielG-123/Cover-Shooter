@@ -36,128 +36,81 @@ public class ShootingState : State
     }
 
 
-    public void AggroMovement() {
-        if (!manager.coverScript.isDefensive && !manager.coverScript.inCover) {         
-            if(manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f)
+    public void AggroMovement()
+    {
+        // Only evaluate entering aggro if we aren't already locked into a path.
+        // If we have a path, we are committed to finishing it.
+        if (!hasPreviousPath)
+        {
+            bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
+            manager.coverScript.isAggro = inRange && !manager.coverScript.CheckCoverConditions();
+        }
+
+        // Exit early if we are not aggro, or if a high-priority defensive override happens
+        if (!manager.coverScript.isAggro || manager.coverScript.isDefensive || manager.coverScript.inCover)
+        {
+            return;
+        }
+
+        // 1. If we don't have a destination yet, find one
+        if (!hasPreviousPath)
+        {
+            SetNewAggroDestination();
+        }
+        else
+        {
+            // 2. Check if the agent has physically arrived at the point
+            if (!manager.agent.pathPending && manager.agent.remainingDistance <= manager.agent.stoppingDistance)
             {
-
-                if (!hasPreviousPath)
-                {
-
-                    Debug.Log("Doing this");
-                    Vector2 randomCircle = Random.insideUnitCircle * 10f;
-                    aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
-
-                    if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 5f, NavMesh.AllAreas))
-                    {
-                        manager.agent.SetDestination(navHit.position);
-                        hasPreviousPath = true;
-                    }
-
-                }
-
-                if (manager.coverScript.CheckCoverConditions())
-                {
-                    Debug.Log("I am not aggroing the player");
-                    manager.coverScript.isAggro = false;
-
-
-
-                }
-
-                else
-                {
-
-
-                    manager.coverScript.isAggro = true;
-
-
-                }
-            }
-            if (manager.agent.remainingDistance <= manager.agent.stoppingDistance && !manager.agent.pathPending && manager.coverScript.isAggro)
-            {
-                Debug.Log("currently running this");
                 if (!arrivedAtAggroPoint)
                 {
-                    Debug.Log("arriving at the point");
-                    aggroDuration = Random.Range(1.0f, 3.0f);
-                    Debug.Log("Trvke");
-                    aggroTimer = 0f;
+                    // Just arrived this exact frame
                     arrivedAtAggroPoint = true;
-                    Debug.Log("arrived at aggro point is: " + arrivedAtAggroPoint);
-
+                    aggroDuration = Random.Range(1.0f, 3.0f);
+                    aggroTimer = 0f;
                 }
-                Debug.Log("This is running now as well");
-
-
-                Debug.Log("This is running now");
-
-                // Only set a new destination if needed
-                if ((!manager.agent.hasPath || manager.agent.velocity.sqrMagnitude < 0.01f) && hasPreviousPath)
+                else
                 {
-                    if (arrivedAtAggroPoint)
+                    // 3. We are waiting at the point. Run the timer.
+                    aggroTimer += Time.deltaTime;
+
+                    if (aggroTimer >= aggroDuration)
                     {
-                        
-                        aggroTimer += Time.deltaTime;
-
-                        if (aggroTimer >= aggroDuration)
+                        // Time is up. Now we are allowed to re-evaluate conditions.
+                        bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
+                        if (!inRange || manager.coverScript.CheckCoverConditions())
                         {
-                            arrivedAtAggroPoint = false;
-
-                            
-                            if (manager.coverScript.CheckCoverConditions())
-                            {
-                                Debug.Log("I am not aggroing the player");
-                                manager.coverScript.isAggro = false;
-
-                            }
-
-                            else if (manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f)
-                            {
-                                Vector2 randomCircle = Random.insideUnitCircle * 10f;
-                                aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
-
-                                if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 5f, NavMesh.AllAreas))
-                                {
-                                    manager.agent.SetDestination(navHit.position);
-                                    hasPreviousPath = true;
-                                }
-                                manager.coverScript.isAggro = true;
-
-
-                            }
-
-
-                            Debug.Log("I am moving to a new aggro point");
-                            // arrivedAtAggroPoint = false;
+                            manager.coverScript.isAggro = false;
+                            hasPreviousPath = false; // Reset for next time we enter aggro
+                        }
+                        else
+                        {
+                            // Still in aggro, pick a new point and repeat
+                            SetNewAggroDestination();
                         }
                     }
                 }
-                
-
-                    
-             }
-              
-
-
-               
             }
-
-                
-
-                 Debug.Log("I am moving to the aggro point: " + aggroPoint);
-
-            manager.animator.SetBool("strafing", true);
-             
-
-               
-
-
-            
         }
 
+        manager.animator.SetBool("strafing", true);
+    }
 
-    
+    // Keep this helper method exactly the same as before
+    private void SetNewAggroDestination()
+    {
+        Vector2 randomCircle = Random.insideUnitCircle * 6.5f;
+        aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
+
+        if (NavMesh.SamplePosition(aggroPoint, out NavMeshHit navHit, 5f, NavMesh.AllAreas))
+        {
+            manager.agent.SetDestination(navHit.position);
+            hasPreviousPath = true;
+            arrivedAtAggroPoint = false;
+            aggroTimer = 0f;
+        }
+    }
+
 
     public override State RunCurrentState()
     {

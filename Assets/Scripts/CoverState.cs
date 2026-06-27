@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.TestTools;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Cinemachine.Editor;
+//using Unity.Mathematics;
 
 public class CoverState : MonoBehaviour
 {
@@ -221,7 +222,13 @@ public class CoverState : MonoBehaviour
     }
     public  void FindCover()
     {
-       // Debug.Log("Entering the cover state");
+
+
+         closestColliderDistance = Mathf.Infinity;
+        closestCover = null;
+
+
+        // Debug.Log("Entering the cover state");
         manager.animator.SetBool("strafing", true);
        // manager.agent.updateRotation = false;
         
