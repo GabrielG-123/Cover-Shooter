@@ -183,7 +183,7 @@ public class CoverState : MonoBehaviour
         }
         if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f) && canTakeCover)
         {
-            
+            Debug.Log("Currently here too");
                 isDefensive = true;
                 return true;
             

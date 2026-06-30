@@ -783,7 +783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.051278844, y: 0.04797056, z: -0.0024659692, w: 0.9975286}
+  m_LocalRotation: {x: 0.05127932, y: 0.047785457, z: -0.0024564548, w: 0.9975375}
   m_LocalPosition: {x: -8.144352, y: 2.307961, z: -5.289285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1460,7 +1460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.051278844, y: 0.047970563, z: -0.0024659697, w: 0.9975286}
+  m_LocalRotation: {x: 0.051279325, y: 0.047785457, z: -0.0024564553, w: 0.9975375}
   m_LocalPosition: {x: -8.144352, y: 2.307961, z: -5.289285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6420,6 +6420,9 @@ MonoBehaviour:
   backToCover: 0
   reenterCoverTimer: 0
   healthBeforeCover: 0
+  arrivedAtAggroPoint: 0
+  aggroTimer: 0
+  aggroDuration: 0
   rotationTimer: 0
 --- !u!4 &1355080483 stripped
 Transform:

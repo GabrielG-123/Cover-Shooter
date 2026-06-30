@@ -25,7 +25,7 @@ public class ShootingState : State
     {
         rotationTimer = manager.attackState.aimingState.rotationTimer;
         manager.agent.ResetPath();
-     //   Debug.Log("Entering shooting state");
+        //   Debug.Log("Entering shooting state");
         manager.animator.SetBool("isAiming", true);
         manager.animator.SetBool("isShooting", true);
         //manager.firing = true;
@@ -38,6 +38,8 @@ public class ShootingState : State
 
     public void AggroMovement()
     {
+
+       
         // Only evaluate entering aggro if we aren't already locked into a path.
         // If we have a path, we are committed to finishing it.
         if (!hasPreviousPath)
@@ -47,17 +49,20 @@ public class ShootingState : State
         }
 
         // Exit early if we are not aggro, or if a high-priority defensive override happens
-        if (!manager.coverScript.isAggro || manager.coverScript.isDefensive || manager.coverScript.inCover)
+        if (!manager.coverScript.isAggro || manager.coverScript.inCover || manager.coverScript.foundCover)
         {
             return;
         }
+
+        Debug.Log("Still here");
 
         // 1. If we don't have a destination yet, find one
         if (!hasPreviousPath)
         {
             SetNewAggroDestination();
+            Debug.Log("Here we are");
         }
-        else
+        else 
         {
             // 2. Check if the agent has physically arrived at the point
             if (!manager.agent.pathPending && manager.agent.remainingDistance <= manager.agent.stoppingDistance)
@@ -65,6 +70,7 @@ public class ShootingState : State
                 if (!arrivedAtAggroPoint)
                 {
                     // Just arrived this exact frame
+                    Debug.Log("On this frame");
                     arrivedAtAggroPoint = true;
                     aggroDuration = Random.Range(1.0f, 3.0f);
                     aggroTimer = 0f;
@@ -72,13 +78,14 @@ public class ShootingState : State
                 else
                 {
                     // 3. We are waiting at the point. Run the timer.
+                    Debug.Log("Currently here");
                     aggroTimer += Time.deltaTime;
 
                     if (aggroTimer >= aggroDuration)
                     {
                         // Time is up. Now we are allowed to re-evaluate conditions.
-                        bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
-                        if (!inRange || manager.coverScript.CheckCoverConditions())
+                       // bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
+                        if (manager.coverScript.CheckCoverConditions())
                         {
                             manager.coverScript.isAggro = false;
                             hasPreviousPath = false; // Reset for next time we enter aggro
@@ -115,8 +122,8 @@ public class ShootingState : State
     public override State RunCurrentState()
     {
 
+        Debug.Log("Has a previous path: " + hasPreviousPath);
 
-      
         AggroMovement();
 
         if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover && !manager.coverScript.foundCover)
@@ -169,7 +176,7 @@ public class ShootingState : State
         {
 
           
-
+            
             manager.myGun.reload(1);
 
 
