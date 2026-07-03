@@ -264,17 +264,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""65e8bad5-8a6a-4a74-ae83-c75dede786ad"",
-                    ""path"": ""<Keyboard>/rightShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Cover"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""fa003c7e-3806-48ad-a431-232f82e95ddf"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -398,6 +387,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CoverReload"",
+                    ""type"": ""Button"",
+                    ""id"": ""7503e88f-ab47-4c5a-8bed-4440de548f06"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -565,6 +563,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CoverShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6a11328-2b42-460b-992e-3e3acb9bad7b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CoverReload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -591,6 +600,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Cover_CoverAim = m_Cover.FindAction("CoverAim", throwIfNotFound: true);
         m_Cover_CoverLook = m_Cover.FindAction("CoverLook", throwIfNotFound: true);
         m_Cover_CoverShoot = m_Cover.FindAction("CoverShoot", throwIfNotFound: true);
+        m_Cover_CoverReload = m_Cover.FindAction("CoverReload", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -782,6 +792,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Cover_CoverAim;
     private readonly InputAction m_Cover_CoverLook;
     private readonly InputAction m_Cover_CoverShoot;
+    private readonly InputAction m_Cover_CoverReload;
     public struct CoverActions
     {
         private @PlayerControls m_Wrapper;
@@ -792,6 +803,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @CoverAim => m_Wrapper.m_Cover_CoverAim;
         public InputAction @CoverLook => m_Wrapper.m_Cover_CoverLook;
         public InputAction @CoverShoot => m_Wrapper.m_Cover_CoverShoot;
+        public InputAction @CoverReload => m_Wrapper.m_Cover_CoverReload;
         public InputActionMap Get() { return m_Wrapper.m_Cover; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -819,6 +831,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CoverShoot.started += instance.OnCoverShoot;
             @CoverShoot.performed += instance.OnCoverShoot;
             @CoverShoot.canceled += instance.OnCoverShoot;
+            @CoverReload.started += instance.OnCoverReload;
+            @CoverReload.performed += instance.OnCoverReload;
+            @CoverReload.canceled += instance.OnCoverReload;
         }
 
         private void UnregisterCallbacks(ICoverActions instance)
@@ -841,6 +856,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CoverShoot.started -= instance.OnCoverShoot;
             @CoverShoot.performed -= instance.OnCoverShoot;
             @CoverShoot.canceled -= instance.OnCoverShoot;
+            @CoverReload.started -= instance.OnCoverReload;
+            @CoverReload.performed -= instance.OnCoverReload;
+            @CoverReload.canceled -= instance.OnCoverReload;
         }
 
         public void RemoveCallbacks(ICoverActions instance)
@@ -879,5 +897,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCoverAim(InputAction.CallbackContext context);
         void OnCoverLook(InputAction.CallbackContext context);
         void OnCoverShoot(InputAction.CallbackContext context);
+        void OnCoverReload(InputAction.CallbackContext context);
     }
 }

@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isCrouched;
     private bool isWalking;
-    private bool isSprinting;
+    [SerializeField] private bool isSprinting;
     private bool isStanding;
     private bool canTakeCover;
     private bool isMovingCover;
@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isSprinting)
         {
+
             MoveDirection = value.Get<Vector2>();
             ThreeDMoveDirection.x = MoveDirection.x;
             ThreeDMoveDirection.z = MoveDirection.y;
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+        
 
 
     }
@@ -180,6 +181,7 @@ public class PlayerController : MonoBehaviour
     {
 
         shiftPressed = value.isPressed;
+        Debug.Log("Shift pressed: " + shiftPressed);    
         // animator.SetBool("isSprinting", true);
 
 
@@ -221,16 +223,27 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCoverMovement(InputValue value)
+
     {
+
+
+        if (playerInput.currentActionMap.name != "Cover")
+        {
+            return;
+        }
+
+
+
         if (!isAiming)
         {
+            Debug.Log("Doing this");
             CoverMoveDirection = value.Get<Vector2>();
             isMovingCover = CoverMoveDirection.x > 0 || CoverMoveDirection.x < 0;
             ThreeDCoverMoveDirection = CoverMoveDirection.x * playerModel.right;
 
             if (CoverMoveDirection.x < 0 && ThreeDCoverMoveDirection.x != 0)
             {
-
+                Debug.Log("We are now here");
                 animator.SetBool("sneakingLeft", true);
 
                 animator.SetBool("isMovingCrouched", true);
@@ -396,6 +409,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    private void OnCoverReload(InputValue value) { 
+    
+    
+            isReloading = value.isPressed;
+            myGun.reload(1);
+
+
+    }
 
 
 
@@ -1034,8 +1056,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isMoving) {
 
+
+            animator.SetFloat(MoveXHash, 0);
+            animator.SetFloat(MoveZHash, 0);
+
+        }
         
+
         playerRight = playerModel.right;
        // Debug.DrawRay(coverRaycastLeft.position, playerModel.forward * 1.0f, Color.black);
        // Debug.DrawRay(coverRaycastRight.position, playerModel.forward * 1.0f, Color.cyan);
@@ -1134,7 +1163,7 @@ public class PlayerController : MonoBehaviour
         if (isWalking && (!shiftPressed || isAiming) )
         {
             characterController.Move(Time.deltaTime * velocity);
-
+            Debug.Log("Walking");
         }
 
 
@@ -1206,7 +1235,7 @@ public class PlayerController : MonoBehaviour
 
        //  Debug.Log("Value of MoveX: " + animator.GetFloat("MoveX"));
 
-       // Debug.Log("Current action map: " + playerInput.currentActionMap.name);
+        Debug.Log("Current action map: " + playerInput.currentActionMap.name);
 
        //  Debug.Log("Current character velocity: " + characterController.velocity.magnitude);
 

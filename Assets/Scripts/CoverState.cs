@@ -11,6 +11,7 @@ using Unity.Cinemachine.Editor;
 public class CoverState : MonoBehaviour
 {
     [SerializeField] StateManager manager;
+    [SerializeField] CoverOccupation coverOccupation;
     int currentwaypointindex = 0;
     private float closestColliderDistance = Mathf.Infinity;
     private float currentColliderDistance;
@@ -302,6 +303,7 @@ public class CoverState : MonoBehaviour
 
 
     public void EnterCover() {
+
 
         healthBeforeCover = manager.healthScript.health;
 

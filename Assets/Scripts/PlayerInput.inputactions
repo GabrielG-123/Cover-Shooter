@@ -242,17 +242,6 @@
                 },
                 {
                     "name": "",
-                    "id": "65e8bad5-8a6a-4a74-ae83-c75dede786ad",
-                    "path": "<Keyboard>/rightShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cover",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fa003c7e-3806-48ad-a431-232f82e95ddf",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -376,6 +365,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "CoverReload",
+                    "type": "Button",
+                    "id": "7503e88f-ab47-4c5a-8bed-4440de548f06",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -541,6 +539,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CoverShoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6a11328-2b42-460b-992e-3e3acb9bad7b",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CoverReload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

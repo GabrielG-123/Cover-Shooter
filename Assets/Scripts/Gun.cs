@@ -282,9 +282,11 @@ public class Gun : MonoBehaviour
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(layerIndex).IsName("Reload"));
         float animationLength = animator.GetCurrentAnimatorStateInfo(layerIndex).length;
         yield return new WaitForSeconds(animationLength - 0.25f);
-       // Debug.Log("We are here");
+       
         leftHandIK.weight = 1f;
         gunAimConstraint.weight = initialgunAimWeight;
+        Debug.Log("Changing weights");
+
         RightShoulderAimConstraint.weight = initialRightShoulderWeight;
         var sourcesEnd = spineAim.data.sourceObjects;
         sourcesEnd.SetWeight(0, 1);

@@ -114,6 +114,7 @@
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\MixCamerasBasedOnSpeed.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Scripts\CoverOccupation.cs" />
     <Compile Include="Assets\UnityTechnologies\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
     <Compile Include="Assets\Samples\Input System\1.11.2\Simple Demo\SimpleControls.cs" />
     <Compile Include="Assets\Scripts\AmmoDisplay.cs" />

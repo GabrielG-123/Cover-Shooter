@@ -31,8 +31,11 @@ public class RigManager : MonoBehaviour
 
         if (animator.GetLayerWeight(1) == 1f)
         {
-            RigLayers[1].active = true;
-            RigLayers[0].active = true;
+            if (!animator.GetBool("isReloading")){
+                RigLayers[1].active = true;
+                RigLayers[0].active = true;
+
+            }
 
 
 
