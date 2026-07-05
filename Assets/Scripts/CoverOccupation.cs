@@ -15,6 +15,13 @@ public class CoverOccupation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(coverOccupiers > 0)
+        {
+            isOccupied = true;
+        }
+        else
+        {
+            isOccupied = false;
+        }   
     }
 }

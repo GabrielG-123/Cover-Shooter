@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.TestTools;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Cinemachine.Editor;
+using UnityEngine.UIElements;
 //using Unity.Mathematics;
 
 public class CoverState : MonoBehaviour
@@ -71,6 +72,11 @@ public class CoverState : MonoBehaviour
         healthBeforeCover = manager.healthScript.health;
     }
 
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(navHit.position, 0.5f);
+    }
 
     private void Update()
     {
@@ -235,6 +241,7 @@ public class CoverState : MonoBehaviour
         
 
         Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 20.0f);
+         
 
 
         
@@ -252,7 +259,7 @@ public class CoverState : MonoBehaviour
                 {
                     closestColliderDistance = distMagnitude;
                     closestCover = hitCollider;
-
+                    coverOccupation = closestCover.GetComponent<CoverOccupation>();
 
 
                 }
@@ -280,9 +287,9 @@ public class CoverState : MonoBehaviour
 
             if (NavMesh.SamplePosition(closestPoint, out navHit, 1.5f, NavMesh.AllAreas)) {
 
+                Collider[] occupiers = Physics.OverlapSphere(navHit.position, 0.5f);
                 manager.agent.destination = navHit.position;
-
-
+                
 
 
             }
@@ -293,6 +300,7 @@ public class CoverState : MonoBehaviour
 
 
             Debug.Log("Yes, this");
+           
             foundCover = true;
 
 
@@ -306,6 +314,12 @@ public class CoverState : MonoBehaviour
 
 
         healthBeforeCover = manager.healthScript.health;
+
+        if (coverOccupation != null) {
+
+            coverOccupation.coverOccupiers += 1;
+            
+        }
 
         if (manager.myGun.ammoInClip <= (manager.myGun.ammoInClipMax * 0.2f)) {
             
