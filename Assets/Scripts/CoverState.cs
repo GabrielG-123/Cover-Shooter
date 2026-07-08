@@ -13,6 +13,8 @@ public class CoverState : MonoBehaviour
 {
     [SerializeField] StateManager manager;
     [SerializeField] CoverOccupation coverOccupation;
+    [SerializeField] private LayerMask searchLayer;
+    [SerializeField] Collider hitboxCollider;
     int currentwaypointindex = 0;
     private float closestColliderDistance = Mathf.Infinity;
     private float currentColliderDistance;
@@ -27,6 +29,8 @@ public class CoverState : MonoBehaviour
     public Vector3 coverCenter;
     private Vector3 distanceToCover;
     private Vector3 oppositeNormal;
+    private Vector3 leftSideDistance;
+    private Vector3 rightSideDistance;
     private Quaternion coverRotation;
     private Collider closestCover = null;
     public bool foundCover = false;
@@ -52,6 +56,7 @@ public class CoverState : MonoBehaviour
     [SerializeField] float aggroDuration;
 
 
+    private Collider[] occupiers = new Collider[100];
 
     public NavMeshHit navHit;
 
@@ -148,6 +153,8 @@ public class CoverState : MonoBehaviour
 
         }
 
+        FindCoverSpace();
+
 
         //if (manager.animator.GetCurrentAnimatorStateInfo(0).IsName("Cover To Stand")) { 
         
@@ -227,6 +234,72 @@ public class CoverState : MonoBehaviour
     
     
     }
+
+
+    private void FindCoverSpace() {
+
+        if (foundCover) {
+
+            Debug.Log("Here we are doing this");
+            if (closestCover != null) {
+
+                coverOccupation = closestCover.GetComponent<CoverOccupation>();
+
+
+
+            }
+
+
+            int occupiersCount = Physics.OverlapSphereNonAlloc(navHit.position, 0.5f, occupiers, searchLayer);
+           // Debug.Log("The count of occupiers is: " + occupiersCount);
+            for (int i = 0; i < occupiersCount; i++)
+            {
+                
+               // Debug.Log("The occupier is: " + occupiers[i].name);
+                if (occupiers[i].CompareTag("Enemy") && (occupiers[i] != hitboxCollider))
+                {
+                    Debug.Log("The occupier is: " + occupiers[i].name);
+
+                    if ((occupiers[i].transform.position - leftSideDistance).magnitude > 2.0f)
+                    {
+
+                        Vector3 newPosition = navHit.position + (-closestCover.transform.right * 1.5f);
+                        manager.agent.destination = newPosition;
+
+                        Debug.Log("Move left");
+
+
+
+                    }
+
+                    else if ((occupiers[i].transform.position - rightSideDistance).magnitude > 2.0f) {
+
+
+                        Vector3 newPosition = navHit.position + (closestCover.transform.right * 1.5f);
+                        manager.agent.destination = newPosition;
+                        Debug.Log("Move right");
+                    }
+                    
+
+
+
+
+
+
+
+                }
+
+
+            }
+           // Debug.Log("The first element in the array is: " + occupiers[0].name);
+            
+
+        }
+        
+    
+    
+    }
+
     public  void FindCover()
     {
 
@@ -239,7 +312,7 @@ public class CoverState : MonoBehaviour
         manager.animator.SetBool("strafing", true);
        // manager.agent.updateRotation = false;
         
-
+       
         Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 20.0f);
          
 
@@ -259,7 +332,7 @@ public class CoverState : MonoBehaviour
                 {
                     closestColliderDistance = distMagnitude;
                     closestCover = hitCollider;
-                    coverOccupation = closestCover.GetComponent<CoverOccupation>();
+                   
 
 
                 }
@@ -277,24 +350,30 @@ public class CoverState : MonoBehaviour
 
         if (closestCover != null)
         {
-          //  Debug.Log("The closest cover is: " + closestCover.name);
+
+            
+            //  Debug.Log("The closest cover is: " + closestCover.name);
             coverOffset = closestCover.bounds.extents.magnitude * 0.5f;
             directionToCover = closestCover.transform.position - manager.player.transform.position;
            // directionToCover.y = 0;
             coverCenter = closestCover.bounds.center;
             coverPoint = coverCenter + (directionToCover.normalized * coverOffset);
             closestPoint = closestCover.ClosestPoint(coverPoint);
+            leftSideDistance = coverCenter - closestCover.bounds.extents.x * closestCover.transform.right;
+            rightSideDistance = coverCenter + closestCover.bounds.extents.x * closestCover.transform.right;
 
             if (NavMesh.SamplePosition(closestPoint, out navHit, 1.5f, NavMesh.AllAreas)) {
 
-                Collider[] occupiers = Physics.OverlapSphere(navHit.position, 0.5f);
+                
                 manager.agent.destination = navHit.position;
+
                 
 
 
             }
 
-
+            Debug.Log("Running running");
+           
 
             // Debug.Log("The status of the path is:" + manager.agent.pathStatus);
 
@@ -470,7 +549,7 @@ public class CoverState : MonoBehaviour
     
     public void MovingToCover()
     {
-
+        Debug.Log("This is now running for agent: " + manager.transform.name);
         rotationTimer += Time.deltaTime;
 
 
@@ -503,14 +582,16 @@ public class CoverState : MonoBehaviour
 
 
       //  Debug.DrawRay(manager.agent.transform.position, distanceToCover * 5.0f, Color.red);
-       // Debug.DrawRay(manager.player.transform.position, directionToCover * 5.0f, Color.green);
+        Debug.DrawRay(manager.player.transform.position, directionToCover * 5.0f, Color.green);
             
         //    manager.animator.SetFloat(manager.MoveXHash, Mathf.Clamp(manager.localVelocity.x, -1f, 1f));
         //manager.animator.SetFloat(manager.MoveZHash, Mathf.Clamp(manager.localVelocity.z, -1f, 1f));
 
 
         if (manager.agent.remainingDistance == manager.agent.stoppingDistance && !manager.agent.pathPending) {
-          //  Debug.Log("This is running!");
+
+            Debug.Log("This is currently running for agent: " + manager.transform.name);
+            //  Debug.Log("This is running!");
             distanceToCover = closestCover.transform.position - manager.transform.position;
 
             if (Physics.Raycast(manager.agent.transform.position, distanceToCover, out coverHit, 5.0f)) {
