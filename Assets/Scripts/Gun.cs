@@ -204,7 +204,7 @@ public class Gun : MonoBehaviour
                     
                     
                     }
-                    if (target != null && hitbox != null)
+                    if (target != null && hitbox != null && !hit.transform.CompareTag(transform.root.tag))
                     {
 
                        // Debug.Log("Found component");

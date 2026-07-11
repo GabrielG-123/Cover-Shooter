@@ -140,7 +140,7 @@ public class ShootingState : State
         {
             if (!manager.coverScript.isAggro)
             {
-                Debug.Log("I am moving to cover");
+                Debug.Log("I am moving to cover as agent: " + manager.transform.name);
                 manager.coverScript.MovingToCover();
 
             }
@@ -242,7 +242,7 @@ public class ShootingState : State
 
         }
 
-        if (manager.distanceFromPlayer >= 20.0f && !manager.coverScript.foundCover) {
+        if (manager.distanceFromPlayer >= 14.0f && !manager.coverScript.foundCover) {
           //  Debug.Log("I am no longer shooting at the player");
 
             manager.onSearch = true;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
@@ -110,7 +111,7 @@ public class StateManager : MonoBehaviour
 
             attacking = true;
 
-
+            
 
         }
 
@@ -125,6 +126,8 @@ public class StateManager : MonoBehaviour
       //  Gizmos.DrawSphere(attackState.coverState.coverCenter, 0.3f);
       //  Gizmos.color = Color.blue;
       //  Gizmos.DrawSphere(attackState.coverState.coverHit.point, 0.3f);
+
+
     }
 
 
