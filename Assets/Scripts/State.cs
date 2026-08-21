@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public abstract class State
@@ -35,7 +37,7 @@ public abstract class State
 
 
        // Debug.DrawRay(_manager.agent.transform.position + new Vector3(0, 1.0f, 0), _manager.direction * 10f, Color.red);
-        if (_manager.distanceFromPlayer <= 20.0f)
+        if (_manager.distanceFromPlayer <= 15.0f)
         {
 
 
@@ -53,7 +55,7 @@ public abstract class State
                 
                 }
 
-                    if (_manager.coneAngle >= 0.7071 && hit.transform.CompareTag("Player"))
+                    if (_manager.coneAngle >= 0.5 && hit.transform.CompareTag("Player"))
                     {
                     Debug.Log("Yup, that happened");
 
@@ -104,7 +106,50 @@ public abstract class State
 
     }
 
+    public virtual void promximityAlert()
+    {
 
+        Collider[] colliders = new Collider[50];
+
+        int numColliders = Physics.OverlapSphereNonAlloc(_manager.transform.position, 20.0f, colliders, _manager.coverScript.searchLayer);
+
+        for (int i = 0; i < numColliders; i++)
+        {
+            Collider collider = colliders[i];
+
+
+            if (collider.CompareTag("Enemy") && (collider.transform.root.GetComponent<StateManager>().isAlerted == true) && (collider != _manager.coverScript.hitboxCollider))
+            {
+                if (!_manager.isAlerted)
+                {
+                    Debug.Log("I need to be alerted" + collider.transform.root.name);
+                    _manager.alertMeter = 100;
+                    _manager.isAlerted = true;
+                }
+                // Debug.Log("The component is null for the enemy: " + collider.transform.root.name);
+            }
+            //if (collider.CompareTag("Enemy") && collider != _manager.coverScript.hitboxCollider && collider.transform.root.GetComponent<StateManager>().isAlerted) { 
+            
+            
+            //    Debug.Log("The name of the alerted enemy is: " + collider.transform.root.name);
+            //}
+
+
+
+            //if (collider.CompareTag("Enemy") && collider.GetComponentInParent<StateManager>().isAlerted && !_manager.isAlerted
+            //    && collider != _manager.coverScript.hitboxCollider)
+            //{
+            //    Debug.Log("The name of the alerted enemy is: " + collider.transform.root.name);
+            //    _manager.alertMeter = 100;
+
+            //}
+
+
+
+
+        }
+
+    }
 }
 
 

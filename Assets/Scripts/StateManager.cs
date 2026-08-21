@@ -32,6 +32,7 @@ public class StateManager : MonoBehaviour
     public float burstShotsFired = 0;
     public float xSpeed;
     public float zSpeed;
+    [SerializeField] float remainingDistance;
 
     public Transform testCover;
 
@@ -110,13 +111,17 @@ public class StateManager : MonoBehaviour
         {
 
             attacking = true;
+            isAlerted = true;
 
-            
+
 
         }
 
 
     }
+
+
+
     private void OnDrawGizmos()
     {
       //  Gizmos.color = Color.yellow;
@@ -138,6 +143,8 @@ public class StateManager : MonoBehaviour
         RunStateMachine();
 
         enteringCover = coverScript.enteringCover;
+
+        remainingDistance = agent.remainingDistance;
 
 
         //always updating the direction vector between enemy and player
@@ -241,6 +248,7 @@ public class StateManager : MonoBehaviour
 
         }
         inLOS = currentState.visionCone();
+        currentState.promximityAlert();
 
         Debug.Log("The current state running is: " + currentState);
     }

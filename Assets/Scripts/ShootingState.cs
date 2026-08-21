@@ -28,6 +28,7 @@ public class ShootingState : State
         //   Debug.Log("Entering shooting state");
         manager.animator.SetBool("isAiming", true);
         manager.animator.SetBool("isShooting", true);
+        manager.agent.speed = 2.5f;
         //manager.firing = true;
 
 
@@ -44,13 +45,15 @@ public class ShootingState : State
         // If we have a path, we are committed to finishing it.
         if (!hasPreviousPath)
         {
-            bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
+
+            bool inRange = manager.distanceFromPlayer >= 5.0f && manager.distanceFromPlayer <= 15.0f;
             manager.coverScript.isAggro = inRange && !manager.coverScript.CheckCoverConditions();
         }
 
         // Exit early if we are not aggro, or if a high-priority defensive override happens
         if (!manager.coverScript.isAggro || manager.coverScript.inCover || manager.coverScript.foundCover)
         {
+            
             return;
         }
 
@@ -59,8 +62,9 @@ public class ShootingState : State
         // 1. If we don't have a destination yet, find one
         if (!hasPreviousPath)
         {
-            SetNewAggroDestination();
             Debug.Log("Here we are");
+            SetNewAggroDestination();
+            
         }
         else 
         {
@@ -73,7 +77,7 @@ public class ShootingState : State
                     Debug.Log("On this frame");
                     arrivedAtAggroPoint = true;
                     aggroDuration = Random.Range(1.0f, 3.0f);
-                    aggroTimer = 0f;
+                    
                 }
                 else
                 {
@@ -83,8 +87,9 @@ public class ShootingState : State
 
                     if (aggroTimer >= aggroDuration)
                     {
+                        aggroTimer = 0f; 
                         // Time is up. Now we are allowed to re-evaluate conditions.
-                       // bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
+                        // bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
                         if (manager.coverScript.CheckCoverConditions())
                         {
                             manager.coverScript.isAggro = false;
@@ -106,6 +111,7 @@ public class ShootingState : State
     // Keep this helper method exactly the same as before
     private void SetNewAggroDestination()
     {
+        Debug.Log("Setting new aggro destination");
         Vector2 randomCircle = Random.insideUnitCircle * 6.5f;
         aggroPoint = new Vector3(randomCircle.x, 0, randomCircle.y) + manager.player.transform.position;
 
@@ -114,7 +120,7 @@ public class ShootingState : State
             manager.agent.SetDestination(navHit.position);
             hasPreviousPath = true;
             arrivedAtAggroPoint = false;
-            aggroTimer = 0f;
+           // aggroTimer = 0f;
         }
     }
 
@@ -242,13 +248,13 @@ public class ShootingState : State
 
         }
 
-        if (manager.distanceFromPlayer >= 14.0f && !manager.coverScript.foundCover) {
-          //  Debug.Log("I am no longer shooting at the player");
+        if (manager.distanceFromPlayer >= 20.0f ) {
+           Debug.Log("I am no longer shooting at the player");
 
             manager.onSearch = true;
             return null;
 
-           
+          
            
            
            
@@ -264,6 +270,8 @@ public class ShootingState : State
        // Debug.Log("This will run");
 
         manager.animator.SetBool("isAiming", false);
+        manager.animator.SetBool("strafing", false);
+        manager.animator.SetBool("isShooting", false);
         manager.firing = false;
       manager.RigLayers[0].active = false;
     

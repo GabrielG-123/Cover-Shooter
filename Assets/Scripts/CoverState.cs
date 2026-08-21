@@ -5,17 +5,16 @@ using UnityEditor.Animations;
 using DG.Tweening;
 using UnityEngine.TestTools;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.Cinemachine.Editor;
 using UnityEngine.UIElements;
 
 public class CoverState : MonoBehaviour
 {
     [SerializeField] StateManager manager;
     [SerializeField] CoverOccupation coverOccupation;
-    [SerializeField] private LayerMask searchLayer;
-    [SerializeField] Collider hitboxCollider;
+    public LayerMask searchLayer;
+    public Collider hitboxCollider;
     int currentwaypointindex = 0;
-    private float closestColliderDistance = Mathf.Infinity;
+    [SerializeField] private float closestColliderDistance = Mathf.Infinity;
     private float currentColliderDistance;
     private float coverOffset;
     private float distMagnitude;
@@ -255,7 +254,9 @@ public class CoverState : MonoBehaviour
     {
         Debug.Log("Finding cover for agent: " + manager.transform.name);
 
-        closestColliderDistance = Mathf.Infinity;
+
+        //closestColliderDistance = Mathf.Infinity;
+        Debug.Log("The new value of closestColliderDistance is: " + closestColliderDistance);
         closestCover = null;
         coverSpaces = true;
         coverOccupation = null;
@@ -263,12 +264,15 @@ public class CoverState : MonoBehaviour
         manager.animator.SetBool("strafing", true);
 
         // Increased search radius to 100.0f to guarantee the agent finds the next closest cover
-        Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 100.0f);
+        Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 10.0f);
 
+        
         foreach (var hitCollider in hitColliders)
         {
+
             if (hitCollider.CompareTag("Cover"))
             {
+                Debug.Log("The cover object found is: " + hitCollider.name);
                 distanceToCover = hitCollider.transform.position - manager.transform.position;
                 distMagnitude = distanceToCover.sqrMagnitude;
 
@@ -311,7 +315,7 @@ public class CoverState : MonoBehaviour
             canTakeCover = false;
             startCoverTimer = true;
 
-            // Clear the path so the agent actually stops trying to hump the occupied spot
+            // Clear the path so the agent actually stops trying to take the occupied spot
             if (manager.agent.isOnNavMesh)
             {
                 manager.agent.ResetPath();
@@ -321,6 +325,7 @@ public class CoverState : MonoBehaviour
 
     public void EnterCover()
     {
+        closestColliderDistance = Mathf.Infinity;
         healthBeforeCover = manager.healthScript.health;
 
         if (coverOccupation != null)
