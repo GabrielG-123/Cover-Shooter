@@ -1,6 +1,8 @@
 using Mono.Cecil.Cil;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -21,30 +23,33 @@ public class Gun : MonoBehaviour
     public float nextFire = 0.0f;
     private int bulletsFired;
     [SerializeField] Vector3 bulletSpreadRadius;
-    private Vector3 Spread;
-    private Vector3 centerPosPixels;
-    private Vector3 radiusPosPixels;
+    [SerializeField] private Vector3 Spread;
+    [SerializeField] private Vector3 centerPosPixels;
+    [SerializeField] private Vector3 radiusPosPixels;
     private Vector2 maxCrosshairSpread;
     private float pixelDistance;
-    private float pixelDiameter;
+    [SerializeField] private float pixelDiameter;
     private float crosshairWidth;
     private float crosshairHeight;
     public float bulletSpreadFactor;
-    public float bulletSpreadRadiusIncrement;
+    public float bulletSpreadIncrement;
+    public float decayRate;
+    public float maxSpread;
+    public float minSpread;
     public float shotsForSpread;
     public float timeToReset;
     public float timeElapsed;
     public float resetTracker;
     public float minimumShotsBeforeSpread;
    public bool addSpread = false;
-    private float resolutionFactor;
+    private bool targetInFront; //used to determine if a collider is in the same direction as the bullet raycast
+    [SerializeField] private float resolutionFactor;
     private float hitboxMultiplier;
     private int layerIndex;
 
     //for AI only: 
     public float burstRounds;
     public float timeBetweenBursts;
-
 
 
 
@@ -57,7 +62,6 @@ public class Gun : MonoBehaviour
     float initialgunAimWeight;
     float initialRightShoulderWeight;
     float initialSpineAimWeight;
-
 
 
     // bool canShoot;
@@ -76,6 +80,7 @@ public class Gun : MonoBehaviour
     private CanvasScaler canvasScaler;
     [SerializeField] GameObject crosshair;
    [SerializeField] Camera cam;
+    [SerializeField] Suppression suppressionScript;
 
 
     [SerializeField] Transform raycastObject;
@@ -85,6 +90,12 @@ public class Gun : MonoBehaviour
 
     [SerializeField] LayerMask layerMask;
 
+    [SerializeField] Collider[] characterColliders = new Collider[50];
+    private Dictionary<Collider, Suppression> suppressionScripts = new Dictionary<Collider, Suppression>(); // Array to find character colliders when shooting
+
+
+
+    
 
 
 
@@ -95,18 +106,19 @@ public class Gun : MonoBehaviour
 
     {
 
-        
-      //  animator = GetComponentInParent<Animator>();
-        canvasScaler = CrosshairCanvas.GetComponent<CanvasScaler>();
-        
-       // cam = GetComponentInParent<Camera>();
+
+        //  animator = GetComponentInParent<Animator>();
+
+        // cam = GetComponentInParent<Camera>();
         //initialgunAimWeight = gunAimConstraint.weight;
         //initialRightShoulderWeight = RightShoulderAimConstraint.weight;
-       
 
-
-        crosshairWidth = crosshairTransform.sizeDelta.x;
-        crosshairHeight = crosshairTransform.sizeDelta.y;
+        if (transform.root.CompareTag("Player"))
+        {
+            canvasScaler = CrosshairCanvas.GetComponent<CanvasScaler>();
+            crosshairWidth = crosshairTransform.sizeDelta.x;
+            crosshairHeight = crosshairTransform.sizeDelta.y;
+        }
 
         //layerMask = LayerMask.GetMask("Hitbox");
       //  Debug.Log("Layer mask " + layerMask.value);
@@ -126,6 +138,69 @@ public class Gun : MonoBehaviour
         initialgunAimWeight = gunAimConstraint.weight;
         initialRightShoulderWeight = RightShoulderAimConstraint.weight;
     }
+
+
+    
+    private void suppressionCandidates(Vector3 Origin, float radius) {
+
+        Debug.Log("I am running this function currently!");
+        int numColliders = Physics.OverlapSphereNonAlloc(Origin, radius, characterColliders);
+
+        for (int i = 0; i < numColliders; i++) {
+
+            Collider collider = characterColliders[i];
+            if ((collider.CompareTag("Enemy") || collider.CompareTag("Player")) && (!collider.CompareTag(transform.root.tag))) { 
+           
+                //math to find the shortest distance from a collider to the ray of the bullet
+               Vector3 lineToTarget = collider.transform.position - Origin; //find the distance between any point on the line and the collider
+                Vector3 bulletDirection = (raycastObject.forward + Spread); //get the direction of the bullet
+                 Vector3 closestDistanceToCollider = Vector3.Cross(lineToTarget, bulletDirection.normalized); //use cross product to find the perpendicular between the line and collider
+                                                                                                  //the perpendicular is the shortest path between the two
+                float distance = closestDistanceToCollider.magnitude; //get the magnitude of the perpendicular to find the shortest distance between the line and the collider
+
+                float dotProduct = Vector3.Dot(lineToTarget, bulletDirection.normalized); //use dot product to find if the collider is in front of the bullet or behind it
+
+                if (dotProduct < 0)
+                {
+                       targetInFront = false;
+
+                }
+                else
+                {
+                    targetInFront = true;
+                }
+
+
+                if (!suppressionScripts.TryGetValue(collider, out suppressionScript))
+                {
+
+                    suppressionScript = collider.GetComponent<Suppression>();
+
+
+                    suppressionScripts.Add(collider, suppressionScript);
+
+
+                }
+                else if (suppressionScripts.TryGetValue(collider, out suppressionScript)) {
+
+                    Debug.Log("The collider the script is attached to is:" + collider.name);
+                    suppressionScript.ApplySuppression(targetInFront, distance);
+                
+                } 
+                
+
+
+
+
+
+            }
+
+
+        }
+
+
+    }
+
 
     //  IEnumerator RecoilReset()
     // {
@@ -151,7 +226,13 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
+        bulletSpreadFactor = Mathf.Clamp(bulletSpreadFactor, minSpread, maxSpread);
+        bulletSpreadFactor += bulletSpreadIncrement;
         
+
+
+        Debug.Log("This function is being called");
+      //  suppressionCandidates(raycastObject.position, 10f);
 
         if (!isReloading)
         {
@@ -171,7 +252,8 @@ public class Gun : MonoBehaviour
              //  Spread = (bulletSpreadRadius.x * cameraObject.right) + (bulletSpreadRadius.y * cameraObject.up);
 
                //bulletSpreadRadius = new Vector3(0.005f, 0, 0);
-                 Spread = (bulletSpreadRadius.x * raycastObject.right) + (bulletSpreadRadius.y * raycastObject.up);
+                
+                Spread = (bulletSpreadRadius.x * raycastObject.right) + (bulletSpreadRadius.y * raycastObject.up);
                
 
                 muzzleflash.Play();
@@ -179,9 +261,10 @@ public class Gun : MonoBehaviour
 
                // Debug.Log("layer mask: " + layerMask.value);
 
-                if (Physics.Raycast(raycastObject.position, raycastObject.forward + Spread, out hit, 200f))
+                if (Physics.Raycast(raycastObject.position, raycastObject.forward + Spread, out hit, 40f))
                 {
 
+                    Debug.Log("The direction the bullet is traveling: " + (raycastObject.forward + Spread));
                     
 
                     bulletClone = Instantiate(bulletHole, hit.point, Quaternion.LookRotation(hit.normal, Vector3.up));
@@ -255,6 +338,8 @@ public class Gun : MonoBehaviour
             }
 
         }
+
+        suppressionCandidates(raycastObject.position, 10f);
 
 
 
@@ -333,29 +418,85 @@ public class Gun : MonoBehaviour
     }
 
 
+    private void updateCrosshairVisual(float bulletSpreadFactor)
+    {
+        resolutionFactor = CrosshairCanvas.scaleFactor;
+
+        if (bulletSpreadFactor != maxSpread)
+        {
+
+            centerPosPixels = cam.WorldToScreenPoint(raycastObject.position + raycastObject.forward);
+            Debug.Log("Center pos coordinates:" + centerPosPixels);
+            radiusPosPixels = cam.WorldToScreenPoint(raycastObject.position + raycastObject.forward + (raycastObject.right * bulletSpreadFactor));
+            // Debug.Log("Radius pos coordinates:" + radiusPosPixels);
+            pixelDistance = Vector2.Distance(radiusPosPixels, centerPosPixels) / resolutionFactor;
+
+            // Debug.Log("Distance between pixel points is: " +  pixelDistance);
+            pixelDiameter = pixelDistance * 3.5f ;
+
+            crosshairTransform.sizeDelta = new Vector2(pixelDiameter + crosshairWidth, pixelDiameter + crosshairHeight);
+            maxCrosshairSpread = crosshairTransform.sizeDelta;
+
+
+
+            //if (crosshairTransform.sizeDelta != maxCrosshairSpread)
+            //{
+
+            //    crosshairTransform.sizeDelta = maxCrosshairSpread;
+
+
+            //}
+        }
+    }
+
+
     private void Update()
     {
-       // Debug.DrawRay(raycastObject.position, (raycastObject.forward + Spread) * 200f, Color.yellow);
-     //   Debug.Log("Root node: " + transform.root.gameObject.name);
 
-        float currentCrosshairWidth = crosshairTransform.sizeDelta.x;
-        float currentCrosshairHeight = crosshairTransform.sizeDelta.y;
+        updateCrosshairVisual(bulletSpreadFactor);
+
+        // Debug.DrawRay(raycastObject.position, (raycastObject.forward + Spread) * 200f, Color.yellow);
+        //   Debug.Log("Root node: " + transform.root.gameObject.name);
+
+        // bulletSpreadRadiusIncrement = Mathf.Clamp(bulletSpreadRadiusIncrement, minSpread, maxSpread);
+
+
+        float currentCrosshairWidth = 0;
+        float currentCrosshairHeight = 0;
+        if (transform.root.CompareTag("Player"))
+        {
+            currentCrosshairWidth = crosshairTransform.sizeDelta.x;
+            currentCrosshairHeight = crosshairTransform.sizeDelta.y;
+        }
+
         Destroy(bulletClone, 5);
 
-       // Debug.DrawRay(raycastObject.position, (raycastObject.forward + bulletSpreadRadius) * 200f, Color.red);
+        // Debug.DrawRay(raycastObject.position, (raycastObject.forward + bulletSpreadRadius) * 200f, Color.red);
 
 
-        timeElapsed += Time.deltaTime;
+        //timeElapsed += Time.deltaTime;
         if (animator.GetBool("isFiring") == false)
         {
-            shotsForSpread = Mathf.Lerp(shotsForSpread, 0, timeElapsed / timeToReset);
-            if (shotsForSpread > 0)
+            Debug.Log("This should be happening");
+            bulletSpreadFactor -= decayRate * Time.deltaTime;
+
+            if (bulletSpreadFactor < 0)
             {
-                currentCrosshairHeight = Mathf.Lerp(currentCrosshairHeight, crosshairHeight, timeElapsed / timeToReset);
-                currentCrosshairWidth = Mathf.Lerp(currentCrosshairWidth, crosshairWidth, timeElapsed / timeToReset);
 
-                crosshairTransform.sizeDelta = new Vector2(currentCrosshairWidth, currentCrosshairHeight);
+
+                bulletSpreadFactor = 0;
+
             }
+            //if (transform.root.CompareTag("Player"))
+            //{
+            //    Debug.Log("Trying to do this");
+            //    crosshairTransform.sizeDelta = Vector2.MoveTowards(crosshairTransform.sizeDelta, new Vector2(crosshairWidth, crosshairHeight), 3);
+
+            //    //currentCrosshairHeight = Mathf.Lerp(currentCrosshairHeight, crosshairHeight, timeElapsed / timeToReset);
+            //    //currentCrosshairWidth = Mathf.Lerp(currentCrosshairWidth, crosshairWidth, timeElapsed / timeToReset);
+
+            //    crosshairTransform.sizeDelta = new Vector2(currentCrosshairWidth, currentCrosshairHeight);
+            //}
 
 
 
@@ -365,83 +506,38 @@ public class Gun : MonoBehaviour
 
 
 
-        if (shotsForSpread <= 0.01f)
-        {
+            //if (shotsForSpread <= 0.01f)
+            //{
 
-            bulletSpreadFactor = 0;
-            addSpread = false;
+            //    bulletSpreadFactor = 0;
+            //    addSpread = false;
 
 
 
+            //}
+
+
+
+
+            // Update is called once per frame
+            //void Update()
+            //{
+            //    if (animator.GetBool("isFiring")) {
+
+            //        if (Physics.Raycast(cameraObject.position, cameraObject.forward, out hit, 10.0f)) {
+
+            //            Debug.Log("You hit " + hit.collider.name);
+
+
+
+            //        }
+
+
+            //    }
+
+
+
+            //}
         }
-
-        else if (shotsForSpread > minimumShotsBeforeSpread)
-        {
-
-            if (!addSpread)
-            {
-                resolutionFactor = CrosshairCanvas.scaleFactor;
-                addSpread = true;
-                bulletSpreadFactor += bulletSpreadRadiusIncrement;
-                centerPosPixels = cam.WorldToScreenPoint(raycastObject.position + raycastObject.forward);
-               // Debug.Log("Center pos coordinates:" + centerPosPixels);
-                radiusPosPixels = cam.WorldToScreenPoint(raycastObject.position + raycastObject.forward + (raycastObject.right * bulletSpreadFactor) );
-               // Debug.Log("Radius pos coordinates:" + radiusPosPixels);
-                pixelDistance = Vector2.Distance(radiusPosPixels, centerPosPixels) / resolutionFactor;
-
-               // Debug.Log("Distance between pixel points is: " +  pixelDistance);
-                pixelDiameter = pixelDistance * 3.5f;
-
-                crosshairTransform.sizeDelta = new Vector2(pixelDiameter + crosshairTransform.sizeDelta.x, pixelDiameter + crosshairTransform.sizeDelta.y);
-                maxCrosshairSpread = crosshairTransform.sizeDelta;
-
-
-
-
-                
-
-
-
-
-            }
-
-
-            if (addSpread && animator.GetBool("isFiring") && crosshairTransform.sizeDelta != maxCrosshairSpread) { 
-                    
-                crosshairTransform.sizeDelta = maxCrosshairSpread;
-            
-            
-            }
-
-
-
-
-
-
-        }
-
-
-
-
-        // Update is called once per frame
-        //void Update()
-        //{
-        //    if (animator.GetBool("isFiring")) {
-
-        //        if (Physics.Raycast(cameraObject.position, cameraObject.forward, out hit, 10.0f)) {
-
-        //            Debug.Log("You hit " + hit.collider.name);
-
-
-
-        //        }
-
-
-        //    }
-
-
-
-        //}
-
-    }
+    
 }

@@ -1037,7 +1037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.032378804, y: 0.75454867, z: -0.037335124, w: 0.6543807}
+  m_LocalRotation: {x: 0.03227852, y: 0.75630087, z: -0.03742177, w: 0.65235484}
   m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1930,7 +1930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0323788, y: 0.75454867, z: -0.037335124, w: 0.6543806}
+  m_LocalRotation: {x: 0.03227852, y: 0.7563009, z: -0.03742177, w: 0.6523548}
   m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5256,12 +5256,8 @@ MonoBehaviour:
   fireRate: 0.09
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0
-  maxSpread: 0
-  minSpread: 0
+  bulletSpreadRadiusIncrement: 0.05
   shotsForSpread: 0
   timeToReset: 1.5
   timeElapsed: 0
@@ -7821,12 +7817,8 @@ MonoBehaviour:
   fireRate: 10.1
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0
-  maxSpread: 0
-  minSpread: 0
+  bulletSpreadRadiusIncrement: 0
   shotsForSpread: 0
   timeToReset: 0
   timeElapsed: 0
@@ -8420,12 +8412,8 @@ MonoBehaviour:
   fireRate: 0.09
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0
-  maxSpread: 0
-  minSpread: 0
+  bulletSpreadRadiusIncrement: 0.05
   shotsForSpread: 0
   timeToReset: 1.5
   timeElapsed: 0
@@ -9040,7 +9028,6 @@ MonoBehaviour:
   - {fileID: 1472146643}
   - {fileID: 1574075697}
   currentweapon: 0
-  currentGunScript: {fileID: 0}
   weaponGrip: {fileID: 1840062129}
   leftHandIK: {fileID: 1034166349}
   rigBuilder: {fileID: 1839985250}
@@ -9244,8 +9231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58be23263249e6b49a3c20ebefa1db24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Suppression
-  suppressionAmount: 0.01
-  weaponInventory: {fileID: 1297998445}
+  suppressionAmount: 0.1
 --- !u!1 &1338113638
 GameObject:
   m_ObjectHideFlags: 0
@@ -10219,18 +10205,14 @@ MonoBehaviour:
   bulletSpeed: 0
   bulletLifetime: 0
   bulletDamage: 40
-  ammoInClip: 56.9
+  ammoInClip: 30
   ammoInClipMax: 30
   ammoReserve: 2017.7
   fireRate: 0.09
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0.0025
-  maxSpread: 0.07
-  minSpread: 0.02
+  bulletSpreadRadiusIncrement: 0
   shotsForSpread: 0
   timeToReset: 1.5
   timeElapsed: 0
@@ -10361,12 +10343,8 @@ MonoBehaviour:
   fireRate: 0.09
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0
-  maxSpread: 0
-  minSpread: 0
+  bulletSpreadRadiusIncrement: 0.05
   shotsForSpread: 0
   timeToReset: 1.5
   timeElapsed: 0
@@ -10946,13 +10924,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573777618}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000045401967, y: 0.00041797748, z: -0.000000002793967, w: 1}
-  m_LocalPosition: {x: 0.024, y: 1.209, z: -0.089}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1.269, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1839985248}
-  m_LocalEulerAnglesHint: {x: 0, y: 0.048, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1573992821 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6000407479487422213, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
@@ -12139,13 +12117,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741319260}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.1041056, z: -0, w: -0.99456626}
-  m_LocalPosition: {x: -5.36, y: 1.24, z: -8.16}
-  m_LocalScale: {x: 5.2987294, y: 1.614795, z: 0.83161736}
+  m_LocalRotation: {x: -0, y: -0.027113114, z: -0, w: -0.9996324}
+  m_LocalPosition: {x: -5.08, y: 1.23, z: -6.82}
+  m_LocalScale: {x: 5.2987294, y: 1.1813433, z: 0.83161736}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -348.049, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -356.893, z: 0}
 --- !u!114 &1741319265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13600,10 +13578,10 @@ PrefabInstance:
       addedObject: {fileID: 2098758255}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1573777619}
+      addedObject: {fileID: 410451388}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 410451388}
+      addedObject: {fileID: 1573777619}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1150791183}
@@ -13977,12 +13955,8 @@ MonoBehaviour:
   fireRate: 0.07
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0
-  maxSpread: 0
-  minSpread: 0
+  bulletSpreadRadiusIncrement: 0
   shotsForSpread: 0
   timeToReset: 0
   timeElapsed: 0
@@ -14093,12 +14067,8 @@ MonoBehaviour:
   fireRate: 0.09
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
-  Spread: {x: 0, y: 0, z: 0}
-  pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0
-  maxSpread: 0
-  minSpread: 0
+  bulletSpreadRadiusIncrement: 0.05
   shotsForSpread: 0
   timeToReset: 1.5
   timeElapsed: 0
@@ -15392,7 +15362,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 113685487936475684, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2032924468467448983, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
@@ -15440,7 +15410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.20626336
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15448,11 +15418,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.0057445
+      value: -3.84
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.02132701
+      value: -0.7213384
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.x
@@ -15460,7 +15430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.99977255
+      value: -0.69258285
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.z
@@ -15472,7 +15442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 537.556
+      value: 447.66998
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -15491,20 +15461,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585545}
     - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
-      propertyPath: maxSpread
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
-      propertyPath: minSpread
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: bulletHole
       value: 
       objectReference: {fileID: 489330201}
     - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: bulletSpreadRadiusIncrement
-      value: 0
+      value: 0.075
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

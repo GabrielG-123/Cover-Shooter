@@ -63,7 +63,7 @@ public class ShootingState : State
         if (!hasPreviousPath)
         {
             Debug.Log("Here we are");
-            SetNewAggroDestination();
+           // SetNewAggroDestination();
             
         }
         else 
@@ -130,7 +130,7 @@ public class ShootingState : State
 
         Debug.Log("Has a previous path: " + hasPreviousPath);
 
-        AggroMovement();
+       // AggroMovement();
 
         if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover && !manager.coverScript.foundCover)
         {
@@ -138,7 +138,7 @@ public class ShootingState : State
             {
                 Debug.Log("The status of CheckCoverConditions is: " + manager.coverScript.CheckCoverConditions());
                 Debug.Log("Yes, this is actually happening");
-                manager.coverScript.FindCover();
+               // manager.coverScript.FindCover();
             }
         }
 
@@ -147,7 +147,7 @@ public class ShootingState : State
             if (!manager.coverScript.isAggro)
             {
                 Debug.Log("I am moving to cover as agent: " + manager.transform.name);
-                manager.coverScript.MovingToCover();
+               // manager.coverScript.MovingToCover();
 
             }
 
@@ -158,7 +158,7 @@ public class ShootingState : State
         {
             Debug.Log("The status of inCover is: " + manager.coverScript.inCover);  
             Debug.Log("Happening currently");
-            manager.coverScript.coverShootCheck();
+          //  manager.coverScript.coverShootCheck();
 
 
 

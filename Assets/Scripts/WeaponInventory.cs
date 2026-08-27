@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UIElements;
 
 public class WeaponInventory : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class WeaponInventory : MonoBehaviour
     public List<GameObject> weapons = new List<GameObject>();
 
     public int currentweapon = 0;
+    public Gun currentGunScript;
+
 
     int weaponIndex;
 
@@ -33,8 +36,13 @@ public class WeaponInventory : MonoBehaviour
 
 
         leftHandPosition = weapons[currentweapon].transform.Find("ref_left_hand_gri");
+        Debug.Log("The name of the current weapon is: " + weapons[currentweapon].name);
 
+        currentGunScript = weapons[currentweapon].GetComponentInChildren<Gun>();
 
+        if(currentGunScript == null) {
+            Debug.LogError("The current weapon does not have a Gun script attached.");
+        }
 
 
     }
@@ -46,6 +54,15 @@ public class WeaponInventory : MonoBehaviour
         leftHandTarget.position = leftHandPosition.position;
         leftHandTarget.rotation = leftHandPosition.rotation;
     }
+
+
+    //private void Update()
+    //{
+    //    if (weapons[currentweapon] != null && )
+    //    {
+    //        currentGunScript = weapons[currentweapon].GetComponent<Gun>();
+    //    }
+    //}
 
     public void switchWeapons(float mouseinput)
     {
@@ -104,12 +121,15 @@ public class WeaponInventory : MonoBehaviour
 
         }
         leftHandPosition = weapons[currentweapon].transform.Find("ref_left_hand_gri");
+        
+        currentGunScript = weapons[currentweapon].GetComponentInChildren<Gun>();
 
 
-      
+
 
 
 
     }
+
 
 }

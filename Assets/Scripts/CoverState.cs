@@ -266,7 +266,7 @@ public class CoverState : MonoBehaviour
         // Increased search radius to 100.0f to guarantee the agent finds the next closest cover
         Collider[] hitColliders = Physics.OverlapSphere(manager.transform.position, 10.0f);
 
-        
+
         foreach (var hitCollider in hitColliders)
         {
 
@@ -348,7 +348,8 @@ public class CoverState : MonoBehaviour
         Sequence coverSequence = DOTween.Sequence();
         coverSequence.Append(manager.agent.transform.DOMove(navHit.position, 0.5f));
         coverSequence.Append(manager.agent.transform.DORotateQuaternion(coverRotation, 0.5f));
-        coverSequence.OnComplete(() => {
+        coverSequence.OnComplete(() =>
+        {
             manager.agent.enabled = true;
         });
 

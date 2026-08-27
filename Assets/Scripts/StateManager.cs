@@ -12,7 +12,7 @@ public class StateManager : MonoBehaviour
     private State currentState;
     public Animator animator;
     public ObjectHealth healthScript;
-    public CoverState coverScript;
+   public CoverState coverScript;
     public bool isAlerted;
     public GameObject player;
     public Transform[] waypoints;
@@ -142,7 +142,7 @@ public class StateManager : MonoBehaviour
     {
         RunStateMachine();
 
-        enteringCover = coverScript.enteringCover;
+       // enteringCover = coverScript.enteringCover;
 
         remainingDistance = agent.remainingDistance;
 
@@ -152,6 +152,7 @@ public class StateManager : MonoBehaviour
         direction = player.transform.position - transform.position;
         targetRotation = Quaternion.LookRotation(direction);
         distanceFromPlayer = Vector3.Distance(transform.position, player.transform.position);
+        Debug.Log("The name of the player is: " + player.name);
 
 
         //find the cosine of the angle between enemy's forward vector and direction vector from enemy to player. 
