@@ -91,7 +91,6 @@
     <Compile Include="Assets\Scripts\RadiusScript.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\3D Samples\Custom Blends\BlendStyleManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControls.cs" />
-    <Compile Include="Assets\Scripts\CoverState.cs" />
     <Compile Include="Assets\Scripts\WeaponInventory.cs" />
     <Compile Include="Assets\Samples\Input System\1.11.2\Simple Demo\SimpleController_UsingActions.cs" />
     <Compile Include="Assets\Scripts\InputActions.cs" />
@@ -122,6 +121,7 @@
     <Compile Include="Assets\Scripts\CoverOccupation.cs" />
     <Compile Include="Assets\UnityTechnologies\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
     <Compile Include="Assets\Samples\Input System\1.11.2\Simple Demo\SimpleControls.cs" />
+    <Compile Include="Assets\Scripts\CoverScript.cs" />
     <Compile Include="Assets\Scripts\AmmoDisplay.cs" />
     <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\ThirdPersonController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />

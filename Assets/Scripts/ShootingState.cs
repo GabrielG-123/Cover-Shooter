@@ -128,6 +128,10 @@ public class ShootingState : State
     public override State RunCurrentState()
     {
 
+
+
+
+
         Debug.Log("Has a previous path: " + hasPreviousPath);
 
        // AggroMovement();
@@ -208,6 +212,7 @@ public class ShootingState : State
          
         if (manager.firing == true && manager.animator.GetBool("isShooting"))
         {
+            
 
             Debug.Log("here");
             if (manager.burstShotsFired < manager.myGun.burstRounds && !manager.coverScript.enteringCover)
@@ -229,7 +234,7 @@ public class ShootingState : State
                 timeSinceLastShot += Time.deltaTime;
                 if (timeSinceLastShot >= manager.myGun.timeBetweenBursts)
                 {
-
+                    manager.myGun.timeBetweenBursts = Random.Range(0.5f, 1.5f);
                     manager.burstShotsFired = 0;
                     timeSinceLastShot = 0;
 

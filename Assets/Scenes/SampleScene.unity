@@ -1037,7 +1037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.032378804, y: 0.75454867, z: -0.037335124, w: 0.6543807}
+  m_LocalRotation: {x: 0.029685166, y: 0.7985162, z: -0.039510682, w: 0.5999413}
   m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1320,7 +1320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -222.25, y: -218.75}
+  m_AnchoredPosition: {x: -766, y: -393.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &121848544
@@ -1930,7 +1930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0323788, y: 0.75454867, z: -0.037335124, w: 0.6543806}
+  m_LocalRotation: {x: 0.02968517, y: 0.7985162, z: -0.03951068, w: 0.5999413}
   m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4278,6 +4278,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -5480977901411583989, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
   m_PrefabInstance: {fileID: 1839985242}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &746056554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6164579254363217697, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+  m_PrefabInstance: {fileID: 1034025544083684363}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &754934518
 GameObject:
   m_ObjectHideFlags: 0
@@ -4720,12 +4725,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5257,9 +5262,12 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
+  decayRate: 0
   maxSpread: 0
   minSpread: 0
   shotsForSpread: 0
@@ -5268,6 +5276,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 1
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 5
   timeBetweenBursts: 1.5
   leftHandIK: {fileID: 2000285996}
@@ -6773,11 +6782,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 99.14
+  m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 0.26
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 2
-  m_MatchWidthOrHeight: 1
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -6795,7 +6804,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 1
+  m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -6951,12 +6960,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -7822,9 +7831,12 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
+  decayRate: 0
   maxSpread: 0
   minSpread: 0
   shotsForSpread: 0
@@ -7833,6 +7845,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 0
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 0
   timeBetweenBursts: 0
   leftHandIK: {fileID: 0}
@@ -8421,9 +8434,12 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
+  decayRate: 0
   maxSpread: 0
   minSpread: 0
   shotsForSpread: 0
@@ -8432,6 +8448,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 1
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 5
   timeBetweenBursts: 1.5
   leftHandIK: {fileID: 431486460}
@@ -9246,6 +9263,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Suppression
   suppressionAmount: 0.01
   weaponInventory: {fileID: 1297998445}
+--- !u!1 &1320528405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6279134089496186487, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+  m_PrefabInstance: {fileID: 1034025544083684363}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1320528415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320528405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ba3e4960cb8e440bbe2a3385151df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponInventory
+  weapons:
+  - {fileID: 746056554}
+  currentweapon: 0
+  currentGunScript: {fileID: 0}
+  weaponGrip: {fileID: 0}
+  leftHandIK: {fileID: 0}
+  rigBuilder: {fileID: 0}
+  leftHandPosition: {fileID: 0}
+  leftHandTarget: {fileID: 0}
+--- !u!114 &1320528416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320528405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58be23263249e6b49a3c20ebefa1db24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Suppression
+  suppressionAmount: 0.01
+  weaponInventory: {fileID: 1320528415}
 --- !u!1 &1338113638
 GameObject:
   m_ObjectHideFlags: 0
@@ -10185,13 +10242,13 @@ MonoBehaviour:
   xValue: 0
   recoilBackPosition: 0
   recoilForwardPosition: 0
-  t: 0
+  t: 0.14
   u: 0
   deltaTime: 0
   frameRate: 0
-  verticalRecoilWeaponOffset: 0
+  verticalRecoilWeaponOffset: 0.05
   animator: {fileID: 1839985259}
-  upRecoilWeaponOffset: 0
+  upRecoilWeaponOffset: 0.19
 --- !u!4 &1474119605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8021001004253913084, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
@@ -10226,10 +10283,13 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0.0025
-  maxSpread: 0.07
+  bulletSpreadIncrement: 0.01
+  decayRate: 0.025
+  maxSpread: 0.05
   minSpread: 0.02
   shotsForSpread: 0
   timeToReset: 1.5
@@ -10237,6 +10297,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 3
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 0
   timeBetweenBursts: 0
   leftHandIK: {fileID: 1034166349}
@@ -10362,9 +10423,12 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
+  decayRate: 0
   maxSpread: 0
   minSpread: 0
   shotsForSpread: 0
@@ -10373,6 +10437,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 1
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 5
   timeBetweenBursts: 2
   leftHandIK: {fileID: 129234234}
@@ -13978,9 +14043,12 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
+  decayRate: 0
   maxSpread: 0
   minSpread: 0
   shotsForSpread: 0
@@ -13989,6 +14057,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 0
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 0
   timeBetweenBursts: 0
   leftHandIK: {fileID: 1034166349}
@@ -14094,9 +14163,12 @@ MonoBehaviour:
   nextFire: 0
   bulletSpreadRadius: {x: 0, y: 0, z: 0}
   Spread: {x: 0, y: 0, z: 0}
+  centerPosPixels: {x: 0, y: 0, z: 0}
+  radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
+  decayRate: 0
   maxSpread: 0
   minSpread: 0
   shotsForSpread: 0
@@ -14105,6 +14177,7 @@ MonoBehaviour:
   resetTracker: 0
   minimumShotsBeforeSpread: 1
   addSpread: 0
+  resolutionFactor: 0
   burstRounds: 5
   timeBetweenBursts: 1.5
   leftHandIK: {fileID: 2098192396}
@@ -15402,6 +15475,10 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 1573777619}
+    - target: {fileID: 2467449180084402737, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: weaponInventory
+      value: 
+      objectReference: {fileID: 1320528415}
     - target: {fileID: 3152975603170773730, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: player
       value: 
@@ -15434,9 +15511,17 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 949846782}
+    - target: {fileID: 5597790125832040661, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_Speed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6279134089496186487, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_Name
       value: Swat
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279134089496186487, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15491,6 +15576,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585545}
     - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: addSpread
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: decayRate
+      value: 0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: maxSpread
       value: 0.07
       objectReference: {fileID: 0}
@@ -15503,13 +15596,27 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 489330201}
     - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: timeBetweenBursts
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: bulletSpreadIncrement
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: bulletSpreadRadiusIncrement
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6279134089496186487, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1320528415}
+    - targetCorrespondingSourceObject: {fileID: 6279134089496186487, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1320528416}
   m_SourcePrefab: {fileID: 100100000, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
 --- !u!1001 &3201074474828896871
 PrefabInstance:

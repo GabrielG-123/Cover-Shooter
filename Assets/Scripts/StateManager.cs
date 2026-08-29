@@ -12,7 +12,7 @@ public class StateManager : MonoBehaviour
     private State currentState;
     public Animator animator;
     public ObjectHealth healthScript;
-   public CoverState coverScript;
+   public CoverScript coverScript;
     public bool isAlerted;
     public GameObject player;
     public Transform[] waypoints;

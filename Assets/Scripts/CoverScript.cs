@@ -1,13 +1,8 @@
-using System.Runtime.CompilerServices;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEditor.Animations;
-using DG.Tweening;
-using UnityEngine.TestTools;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEngine.UIElements;
 
-public class CoverState : MonoBehaviour
+public class CoverScript : MonoBehaviour
 {
     [SerializeField] StateManager manager;
     [SerializeField] CoverOccupation coverOccupation;
