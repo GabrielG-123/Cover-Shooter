@@ -63,7 +63,7 @@ public class ShootingState : State
         if (!hasPreviousPath)
         {
             Debug.Log("Here we are");
-           // SetNewAggroDestination();
+            SetNewAggroDestination();
             
         }
         else 
@@ -89,7 +89,7 @@ public class ShootingState : State
                     {
                         aggroTimer = 0f; 
                         // Time is up. Now we are allowed to re-evaluate conditions.
-                        // bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
+                         bool inRange = manager.distanceFromPlayer >= 10.0f && manager.distanceFromPlayer <= 20.0f;
                         if (manager.coverScript.CheckCoverConditions())
                         {
                             manager.coverScript.isAggro = false;
@@ -142,7 +142,7 @@ public class ShootingState : State
             {
                 Debug.Log("The status of CheckCoverConditions is: " + manager.coverScript.CheckCoverConditions());
                 Debug.Log("Yes, this is actually happening");
-               // manager.coverScript.FindCover();
+                manager.coverScript.FindCover();
             }
         }
 
@@ -151,7 +151,7 @@ public class ShootingState : State
             if (!manager.coverScript.isAggro)
             {
                 Debug.Log("I am moving to cover as agent: " + manager.transform.name);
-               // manager.coverScript.MovingToCover();
+                manager.coverScript.MovingToCover();
 
             }
 
@@ -162,7 +162,7 @@ public class ShootingState : State
         {
             Debug.Log("The status of inCover is: " + manager.coverScript.inCover);  
             Debug.Log("Happening currently");
-          //  manager.coverScript.coverShootCheck();
+            manager.coverScript.coverShootCheck();
 
 
 
@@ -170,13 +170,13 @@ public class ShootingState : State
 
 
 
-        //if (manager.coverScript.checkExitCoverConditions()) {
+        if (manager.coverScript.CheckExitCoverConditions()) {
 
 
-        //    manager.coverScript.ExitCover();
+           manager.coverScript.ExitCover();
         
         
-        //}
+        }
 
 
 

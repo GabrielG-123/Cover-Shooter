@@ -6,6 +6,7 @@ public class CoverScript : MonoBehaviour
 {
     [SerializeField] StateManager manager;
     [SerializeField] CoverOccupation coverOccupation;
+    [SerializeField] Suppression suppressionScript;
     public LayerMask searchLayer;
     public Collider hitboxCollider;
     int currentwaypointindex = 0;
@@ -492,13 +493,42 @@ public class CoverScript : MonoBehaviour
         {
             coverTimer += Time.deltaTime;
 
-            if (coverTimer >= Random.Range(3, 6))
+            
+
+            if (suppressionScript.suppressionAmount >= (suppressionScript.maxSuppression * 0.5f))
             {
-                manager.animator.SetBool("isPeeking", true);
-                manager.animator.SetBool("isShooting", true);
-                manager.animator.SetLayerWeight(1, 1f);
-                manager.RigLayers[0].active = true;
-                coverPeek = true;
+                Debug.Log("Applying suppression , cover timer is: " + coverTimer);
+                if (coverTimer >= Random.Range(5, 8))
+                {
+                    Debug.Log("Turning on the animations");
+                    manager.animator.SetBool("isPeeking", true);
+                    manager.animator.SetBool("isShooting", true);
+                    manager.animator.SetLayerWeight(1, 1f);
+                    manager.RigLayers[0].active = true;
+                    coverPeek = true;
+                    Debug.Log("Turning cover peek on");
+
+
+
+                }
+
+
+
+
+            }
+
+            else {
+
+                if (coverTimer >= Random.Range(1, 4))
+                {
+                    Debug.Log("We are doing this now");
+                    manager.animator.SetBool("isPeeking", true);
+                    manager.animator.SetBool("isShooting", true);
+                    manager.animator.SetLayerWeight(1, 1f);
+                    manager.RigLayers[0].active = true;
+                    coverPeek = true;
+                }
+
             }
 
             if (coverPeek)
@@ -512,6 +542,7 @@ public class CoverScript : MonoBehaviour
                     manager.animator.SetLayerWeight(1, 0f);
                     manager.RigLayers[0].active = false;
                     coverPeek = false;
+
                     coverTimer = 0;
                     backToCover = 0;
                 }
@@ -523,7 +554,35 @@ public class CoverScript : MonoBehaviour
                     coverTimer = 0;
                     backToCover = 0;
                 }
+
+                if (suppressionScript.suppressionAmount >= (suppressionScript.maxSuppression * 0.5f))
+                {
+
+                    if (backToCover >= Random.Range(1, 3))
+                    {
+
+
+                        manager.animator.SetBool("isPeeking", false);
+                        manager.animator.SetBool("isShooting", false);
+                        manager.animator.SetLayerWeight(1, 0f);
+                        manager.RigLayers[0].active = false;
+                        coverPeek = false;
+                        Debug.Log("Turning cover peek off");
+                        coverTimer = 0;
+                        backToCover = 0;
+
+
+                    }
+
+
+
+                }
+
             }
+
+
+            
+
         }
     }
 }

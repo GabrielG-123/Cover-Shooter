@@ -1185,24 +1185,51 @@ public class PlayerController : MonoBehaviour
         myGun = inventory.weapons[currentWeapon].GetComponentInChildren<Gun>();
         currentWeapon = inventory.currentweapon;
         //Calculate how many bullets we can shoot within a 1 second interval
-        if (isShooting && Time.time > myGun.nextFire && isAiming)
-        {
-
-            if (myGun.ammoInClip > 0)
+        if (isShooting && isAiming)
+        {   
+            if (Time.time >= myGun.nextFire)
             {
-                animator.SetBool("isFiring", true);
-                myGun.nextFire = Time.time + myGun.fireRate;
-                myGun.Shoot();
+                if (myGun.ammoInClip > 0)
+                {
+                    animator.SetBool("isFiring", true);
+                    //increment nextFire by fireRate to determine when the next shot can be fired and maintain a
+                    //consistent fire rate regardless of frame rate
+                    myGun.nextFire += myGun.fireRate;
+
+
+
+
+                    //If the player stops shooting, reset nextFire to current time, otherwise the player will shoot more bullets
+                    //than the fire rate allows when they start shooting again because nextFire is set to a time in the past
+                    //and it will take multiple frames for nextFire to catch up to the current time
+                    if (myGun.nextFire < Time.time)
+                    {
+                        myGun.nextFire = Time.time;
+
+
+                    }
+
+
+
+
+
+
+                    myGun.Shoot();
+
+                }
+
+                else
+                {
+                    animator.SetBool("isFiring", false);
+                    
+                }
+
+
+
             }
-
-            else animator.SetBool("isFiring", false);
-
-          //  Debug.Log("Is shooting");
-
-
-
-
         }
+
+        else animator.SetBool("isFiring", false);
 
 
 

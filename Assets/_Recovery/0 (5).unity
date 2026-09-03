@@ -1037,7 +1037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02968608, y: 0.7985018, z: -0.039509915, w: 0.59996057}
+  m_LocalRotation: {x: 0.029676137, y: 0.79865277, z: -0.03951738, w: 0.5997595}
   m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1930,7 +1930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.029686078, y: 0.79850185, z: -0.039509915, w: 0.59996045}
+  m_LocalRotation: {x: 0.029676136, y: 0.79865277, z: -0.039517384, w: 0.5997595}
   m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10120,8 +10120,8 @@ MonoBehaviour:
   radiusPosPixels: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
-  bulletSpreadIncrement: 0.0035
-  decayRate: 0.025
+  bulletSpreadIncrement: 0.0015
+  decayRate: 0.004
   maxSpread: 0.025
   minSpread: 0.01
   shotsForSpread: 0

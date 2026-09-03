@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Suppression : MonoBehaviour
 {
-    [SerializeField] private float suppressionAmount = 0.01f;
+    [SerializeField] public float suppressionAmount = 0.01f;
     [SerializeField] private WeaponInventory weaponInventory;
-    //access the inventory of weapons to get the current gun and its suppression value
-   // private float bulletClosenessThreshold = 5.0f; // Distance threshold for bullet proximity
-   // Collider[] characterColliders = new Collider[50]; // Array to hold character colliders
+    [SerializeField] private Gun currentGunScript; //the script of the current gun that is being used by the character,
+                                                   //this will be used to access the bullet spread factor and max spread of the gun[
+    [SerializeField] private float suppressionDecayRate = 0.02f; // The rate at which suppression decays over time
+                                                                  // [SerializeField] private float maxSuppresion = 0.5f; // The maximum suppression amount
+    public bool isSuppressed = false; // Flag to indicate if the character is currently suppressed
+    public float maxSuppression = 0.15f; // The maximum suppression amount
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    // Start is called once before the frst execution of Update after the MonoBehaviour is created
     void Start()
     {
 
@@ -23,8 +28,13 @@ public class Suppression : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Mathf.Clamp(suppressionAmount, 0.0f, 0.5f);
         
+        currentGunScript = weaponInventory.currentGunScript;
+        suppressionAmount -= suppressionDecayRate * Time.deltaTime;
+        suppressionAmount = Mathf.Clamp(suppressionAmount, 0.0f, maxSuppression);
+
+
+
     }
 
 
@@ -34,7 +44,7 @@ public class Suppression : MonoBehaviour
 
         if (!targetInFront)
         {
-
+            isSuppressed = false;
             return;
 
         }
@@ -70,9 +80,25 @@ public class Suppression : MonoBehaviour
             {
                 Debug.Log("Trying to apply suppression");
 
-                if(weaponInventory.currentGunScript.bulletSpreadFactor < weaponInventory.currentGunScript.maxSpread)  
-                    weaponInventory.currentGunScript.bulletSpreadFactor += (suppressionAmount * 0.5f);
+                if(currentGunScript.bulletSpreadFactor + (suppressionAmount * 0.5f) < currentGunScript.maxSpread )  
+                    currentGunScript.bulletSpreadFactor += (suppressionAmount * 0.5f);
+
+                else
+                    currentGunScript.bulletSpreadFactor = currentGunScript.maxSpread ;
+
+
+               
+
+
+
+
+
+
+
             }
+
+
+
 
 
 
