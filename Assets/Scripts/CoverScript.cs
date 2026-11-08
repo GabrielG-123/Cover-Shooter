@@ -25,6 +25,7 @@ public class CoverScript : MonoBehaviour
     private Vector3 oppositeNormal;
     private Vector3 leftSideDistance;
     private Vector3 rightSideDistance;
+    private Vector3 coverDestination;
     private Quaternion coverRotation;
     private Collider closestCover = null;
     public bool foundCover = false;
@@ -41,6 +42,7 @@ public class CoverScript : MonoBehaviour
     public bool isDefensive;
     public bool coverSpaces;
     public bool findNewSpace;
+    private bool hasStartedMoving;
     public float playerAngle;
     public float coverAngle;
     public float coverTimer;
@@ -120,6 +122,7 @@ public class CoverScript : MonoBehaviour
     {
         if (manager.healthScript.health <= (healthBeforeCover * 0.5f) && canTakeCover)
         {
+            Debug.Log("Checking the cover conditions");
             isDefensive = true;
             return true;
         }
@@ -146,7 +149,7 @@ public class CoverScript : MonoBehaviour
     private void FindCoverSpace()
     {
         // Do not constantly search for new space if the agent is already comfortably in cover
-        if (!foundCover || closestCover == null || inCover)
+        if (!foundCover || closestCover == null || inCover || !hasStartedMoving)
         {
             return;
         }
@@ -248,10 +251,10 @@ public class CoverScript : MonoBehaviour
 
     public void FindCover()
     {
-        Debug.Log("Finding cover for agent: " + manager.transform.name);
+        Debug.Log("Find cover is being called");
 
 
-        //closestColliderDistance = Mathf.Infinity;
+        closestColliderDistance = Mathf.Infinity;
         Debug.Log("The new value of closestColliderDistance is: " + closestColliderDistance);
         closestCover = null;
         coverSpaces = true;
@@ -301,7 +304,13 @@ public class CoverScript : MonoBehaviour
             // Increased sample radius to 4.0f to prevent NavMesh failure on thicker cover objects
             if (NavMesh.SamplePosition(closestPoint, out navHit, 4.0f, NavMesh.AllAreas))
             {
+                Debug.Log("We have found a valid NavMesh position for the agent to move to");
                 manager.agent.destination = navHit.position;
+
+                Debug.Log("The navHit position is: " + navHit.position + "And the cover destination is: " + manager.agent.destination);
+
+                coverDestination = navHit.position;
+                hasStartedMoving = false;
                 foundCover = true;
             }
         }
@@ -321,6 +330,17 @@ public class CoverScript : MonoBehaviour
 
     public void EnterCover()
     {
+
+        if(enteringCover)
+            {
+            return;
+        }
+
+
+        Debug.Log("The enter cover function is being called");
+
+
+        manager.agent.transform.DOKill(); //cleans up any previous tweens that may be running on the agent's transform to prevent conflicts with the new movement and rotation tweens.
         closestColliderDistance = Mathf.Infinity;
         healthBeforeCover = manager.healthScript.health;
 
@@ -422,7 +442,8 @@ public class CoverScript : MonoBehaviour
 
     public void MovingToCover()
     {
-        Debug.Log("This is now running for agent: " + manager.transform.name);
+        //Debug.Log("This is now running for agent: " + manager.transform.name);
+        Debug.Log("Moving to cover is being called");
         rotationTimer += Time.deltaTime;
 
         if (inCover == true)
@@ -441,7 +462,20 @@ public class CoverScript : MonoBehaviour
 
         Debug.DrawRay(manager.player.transform.position, directionToCover * 5.0f, Color.green);
 
-        if (manager.agent.remainingDistance <= manager.agent.stoppingDistance && !manager.agent.pathPending)
+        if (!hasStartedMoving) { 
+            if(manager.agent.velocity.magnitude > 0.1f)
+            {
+               
+                hasStartedMoving = true;
+            }
+
+            return;
+
+
+        }
+
+        
+        if (hasStartedMoving &&  manager.agent.remainingDistance <= manager.agent.stoppingDistance && !manager.agent.pathPending)
         {
             Debug.Log("This is currently running for agent: " + manager.transform.name);
             if (closestCover == null) return;

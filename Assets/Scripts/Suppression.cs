@@ -69,7 +69,7 @@ public class Suppression : MonoBehaviour
 
 
             else if (bulletCloseness <= 1.5f && bulletCloseness > 0.5f){
-
+                Debug.Log("Applying close suppression");
                 suppressionAmount += 0.01f;
             
             

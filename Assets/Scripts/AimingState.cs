@@ -28,18 +28,18 @@ public override State RunCurrentState()
     {
 
 
-        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.foundCover) {
+        //if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.foundCover) {
 
-            manager.coverScript.FindCover();
+        //    manager.coverScript.FindCover();
         
-        }
+        //}
 
-        if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover) {
+        //if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover) {
 
-            manager.coverScript.MovingToCover();
+        //    manager.coverScript.MovingToCover();
         
         
-        }
+        //}
 
         Debug.Log("Aiming at the player");
         rotationTimer += Time.deltaTime;

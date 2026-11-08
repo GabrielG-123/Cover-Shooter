@@ -194,8 +194,14 @@ public class PlayerController : MonoBehaviour
         if (CheckForCover())
         {
             animator.SetBool("ExitCover", false);
-            oppositeNormal = -coverHit.normal;
-            coverHitPoint = coverHit.point;
+
+           
+              //  coverHitPoint = coverHit.point;
+                oppositeNormal = -coverHit.normal;
+            
+
+            
+            
             
 
 
@@ -211,13 +217,13 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+            
 
 
 
         }
 
-
+       // coverHitPoint = Vector3.zero;
 
 
     }
@@ -294,7 +300,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("canTakeCover", false);
 
 
-
+        coverHitPoint = Vector3.zero;
 
     }
 
@@ -498,7 +504,8 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(raycastOrigin.position, playerModel.forward, out coverHit, 0.75f))
         {
-            coverHitPoint = coverHit.point;
+
+             coverHitPoint = coverHit.point + (coverHit.normal * 0.3f); //Multiply by 0.3 to push the capsule collider out of the cover collider (0.3 is radius of capsule)
             if (coverHit.collider.CompareTag("Cover"))
             {
 
@@ -531,6 +538,8 @@ public class PlayerController : MonoBehaviour
 
 
         }
+
+       
 
         return false;
     }
@@ -594,7 +603,9 @@ public class PlayerController : MonoBehaviour
     {
         if (inCover && !isAiming)
         {
-            if (playerModel.forward != -coverHit.normal) { 
+            if (playerModel.forward != -coverHit.normal) {
+
+                Debug.Log("Running this now");
                 playerModel.rotation = Quaternion.LookRotation(oppositeNormal, Vector3.up);
 
 
@@ -726,6 +737,7 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(raycastOrigin.position - new Vector3(-0.001f, 0.87f, 0.05f), checkValue);
+        Gizmos.DrawSphere(coverHitPoint, 0.02f);
 
 
 
@@ -741,12 +753,12 @@ public class PlayerController : MonoBehaviour
        
         
         while (timeElapsed < lerpDuration) {
-
-            playerModel.position = Vector3.Lerp(playerModel.position, new Vector3(coverHitPoint.x, playerModel.position.y, coverHitPoint.z), percentComplete);
+            Debug.Log("We are moving towards cover");
+            transform.position = Vector3.Lerp(transform.position, new Vector3(coverHitPoint.x, transform.position.y, coverHitPoint.z), percentComplete);
             timeElapsed += Time.deltaTime;
             percentComplete = timeElapsed / lerpDuration;
          //   Debug.Log("transform position" + playerModel.position);
-           // Debug.Log("coverhit position" + coverHit.point);
+            Debug.Log("coverhit position" + coverHit.point);
 
             yield return null;
 
@@ -757,8 +769,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(animationLength - 1.0f);
 
        // playerModel.position = coverHit.point;
-       coverRotation = Quaternion.LookRotation(oppositeNormal, Vector3.up);
-       playerModel.rotation = Quaternion.Slerp(currentRotation, coverRotation, 1);
+      // coverRotation = Quaternion.LookRotation(oppositeNormal, Vector3.up);
+      // playerModel.rotation = Quaternion.Slerp(currentRotation, coverRotation, 1);
        
 
 
@@ -987,16 +999,16 @@ public class PlayerController : MonoBehaviour
         lookAtPosition.z = ThreeDMoveDirection.z;
 
 
-        currentRotation = playerModel.rotation;
+        currentRotation = transform.rotation;
 
         if (isMoving && !animator.GetBool("isAiming"))
         {
 
             Quaternion nextRotation = Quaternion.LookRotation(moveVector, Vector3.up);
-            playerModel.rotation = Quaternion.Slerp(currentRotation, nextRotation, 10 * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(currentRotation, nextRotation, 3.5f * Time.deltaTime);
 
         }
-        //
+        
 
 
 
@@ -1137,11 +1149,11 @@ public class PlayerController : MonoBehaviour
 
        // Debug.Log("The player's velocity is: " + velocity);
 
-        if (float.IsNaN(velocity.x) || float.IsNaN(velocity.y) || float.IsNaN(velocity.z))
-        {
-            Debug.Log("CRITICAL: Velocity became NaN! Resetting to zero.");
-            velocity = Vector3.zero;
-        }
+        //if (float.IsNaN(velocity.x) || float.IsNaN(velocity.y) || float.IsNaN(velocity.z))
+        //{
+        //    Debug.Log("CRITICAL: Velocity became NaN! Resetting to zero.");
+        //    velocity = Vector3.zero;
+        //}
 
 
 
@@ -1253,7 +1265,7 @@ public class PlayerController : MonoBehaviour
       //  Debug.Log(ctrlPressed);
 
         CheckForCover();
-      //  Debug.DrawRay(raycastOrigin.position, playerModel.forward * 0.3f,Color.green);
+       Debug.DrawRay(raycastOrigin.position, transform.forward * 0.75f,Color.green);
        // Debug.DrawRay(hit.point, hit.normal * 2.0f, Color.red);
       // Debug.DrawRay(cameraObject.position, cameraObject.forward * 10.5f, Color.blue);
        // Debug.DrawRay(thirdPersonCamera.position, thirdPersonCamera.forward * 8.0f, Color.red);

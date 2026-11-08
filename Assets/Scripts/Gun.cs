@@ -26,6 +26,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Vector3 Spread;
     [SerializeField] private Vector3 centerPosPixels;
     [SerializeField] private Vector3 radiusPosPixels;
+    [SerializeField] private Vector3 lineToBarrel;
     private Vector2 maxCrosshairSpread;
     private float pixelDistance;
     [SerializeField] private float pixelDiameter;
@@ -44,6 +45,7 @@ public class Gun : MonoBehaviour
    public bool addSpread = false;
     private bool targetInFront; //used to determine if a collider is in the same direction as the bullet raycast
     private bool isPlayer;
+    private bool isEnemy;
     [SerializeField] private float resolutionFactor;
     private float hitboxMultiplier;
     private int layerIndex;
@@ -73,7 +75,7 @@ public class Gun : MonoBehaviour
     [SerializeField] ParticleSystem muzzleflash;
     [SerializeField] WeaponRecoil recoil;
 
-    public Transform gunRaycast;
+   // public Transform gunRaycast;
     public GameObject bulletHole;
     private GameObject bulletClone;
     [SerializeField] RectTransform crosshairTransform;
@@ -82,6 +84,7 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject crosshair;
    [SerializeField] Camera cam;
     [SerializeField] Suppression suppressionScript;
+    [SerializeField] StateManager aiManager;
 
 
     [SerializeField] Transform raycastObject;
@@ -108,6 +111,7 @@ public class Gun : MonoBehaviour
     {
 
         isPlayer = transform.root.CompareTag("Player");
+        isEnemy = transform.root.CompareTag("Enemy");
 
         //  animator = GetComponentInParent<Animator>();
 
@@ -121,6 +125,16 @@ public class Gun : MonoBehaviour
             crosshairWidth = crosshairTransform.sizeDelta.x;
             crosshairHeight = crosshairTransform.sizeDelta.y;
         }
+
+
+        if (isEnemy)
+        {
+            aiManager = transform.root.GetComponent<StateManager>();
+
+        }
+
+
+
 
         //layerMask = LayerMask.GetMask("Hitbox");
       //  Debug.Log("Layer mask " + layerMask.value);
@@ -228,6 +242,23 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
+
+
+        //if (isEnemy) {
+
+        //    if (Physics.Raycast(aiManager.head.position, lineToBarrel, out hit, lineToBarrel.magnitude))
+        //    {
+        //        Debug.Log("The AI cannot shoot because there is an object in the way" + hit.collider.name);
+        //        return;
+
+        //    }
+
+
+        
+        
+        //}
+
+
         Debug.Log("This function is running for the game object: " + transform.root.name);
         bulletSpreadFactor += bulletSpreadIncrement;
         if (bulletSpreadFactor >= minSpread) {
@@ -236,10 +267,12 @@ public class Gun : MonoBehaviour
         }
        
         
+        
+
 
 
         Debug.Log("This function is being called");
-      //  suppressionCandidates(raycastObject.position, 10f);
+       suppressionCandidates(raycastObject.position, 20f);
 
         if (!isReloading)
         {
@@ -255,6 +288,7 @@ public class Gun : MonoBehaviour
 
                
 
+
                 bulletSpreadRadius = Random.insideUnitCircle * bulletSpreadFactor;
              //  Spread = (bulletSpreadRadius.x * cameraObject.right) + (bulletSpreadRadius.y * cameraObject.up);
 
@@ -267,11 +301,12 @@ public class Gun : MonoBehaviour
                 recoil.recoil();
 
                // Debug.Log("layer mask: " + layerMask.value);
+               Debug.DrawRay(raycastObject.position, (raycastObject.forward + Spread) * 60f, Color.blue);
 
                 if (Physics.Raycast(raycastObject.position, raycastObject.forward + Spread, out hit, 60f))
                 {
 
-                    Debug.Log("The direction the bullet is traveling: " + (raycastObject.forward + Spread));
+                   // Debug.Log("The direction the bullet is traveling: " + (raycastObject.forward + Spread));
                     
 
                     bulletClone = Instantiate(bulletHole, hit.point, Quaternion.LookRotation(hit.normal, Vector3.up));
@@ -310,6 +345,8 @@ public class Gun : MonoBehaviour
 
                 }
 
+                
+
                 // if (Mathf.Round(hit.distance % 10) == 0 && Mathf.Round(hit.distance) >= 10)
                 // {
                 //    bulletSpreadFactor += 0.005f;
@@ -346,7 +383,7 @@ public class Gun : MonoBehaviour
 
         }
 
-        suppressionCandidates(raycastObject.position, 20f);
+       
 
 
 
@@ -437,7 +474,7 @@ public class Gun : MonoBehaviour
             {
 
                 centerPosPixels = cam.WorldToScreenPoint(raycastObject.position + raycastObject.forward);
-                Debug.Log("Center pos coordinates:" + centerPosPixels);
+               // Debug.Log("Center pos coordinates:" + centerPosPixels);
                 radiusPosPixels = cam.WorldToScreenPoint(raycastObject.position + raycastObject.forward + (raycastObject.right * bulletSpreadFactor));
                 // Debug.Log("Radius pos coordinates:" + radiusPosPixels);
                 pixelDistance = Vector2.Distance(radiusPosPixels, centerPosPixels) / resolutionFactor;
@@ -464,8 +501,12 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
+        if (isEnemy)
+        {
+            lineToBarrel = raycastObject.position - aiManager.head.position;
+            Debug.DrawRay(aiManager.head.position, lineToBarrel * 10f, Color.green);
 
-            
+        }
           // bulletSpreadFactor = Mathf.Clamp(bulletSpreadFactor, minSpread, maxSpread);
         
         updateCrosshairVisual(bulletSpreadFactor);

@@ -23,6 +23,8 @@ public class ShootingState : State
 
     public override void OnEnter()
     {
+
+        Debug.Log("Entering shooting state");
         rotationTimer = manager.attackState.aimingState.rotationTimer;
         manager.agent.ResetPath();
         //   Debug.Log("Entering shooting state");
@@ -138,6 +140,8 @@ public class ShootingState : State
 
         if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover && !manager.coverScript.foundCover)
         {
+
+            Debug.Log("We are entering this check");
             if (!manager.coverScript.isAggro)
             {
                 Debug.Log("The status of CheckCoverConditions is: " + manager.coverScript.CheckCoverConditions());

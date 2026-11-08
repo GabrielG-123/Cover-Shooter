@@ -257,6 +257,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
       insertIndex: -1
       addedObject: {fileID: 917499232}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 917499241}
   m_SourcePrefab: {fileID: 100100000, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
 --- !u!1 &2618330
 GameObject:
@@ -1037,8 +1040,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02968608, y: 0.7985018, z: -0.039509915, w: 0.59996057}
-  m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
+  m_LocalRotation: {x: 0.029681727, y: 0.7985683, z: -0.03951325, w: 0.59987193}
+  m_LocalPosition: {x: -7.5599213, y: 2.2381392, z: -5.836184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1930,8 +1933,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.029686078, y: 0.79850185, z: -0.039509915, w: 0.59996045}
-  m_LocalPosition: {x: -8.503641, y: 2.2184963, z: -5.1750665}
+  m_LocalRotation: {x: 0.029681727, y: 0.7985683, z: -0.039513245, w: 0.59987193}
+  m_LocalPosition: {x: -7.5599213, y: 2.2381392, z: -5.836184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4195,6 +4198,37 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &695478677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695478679}
+  m_Layer: 0
+  m_Name: FrameRateLimiter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &695478679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695478677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &698839257 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 608321761475470972, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
@@ -5161,6 +5195,7 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
@@ -5182,13 +5217,13 @@ MonoBehaviour:
   spineAim: {fileID: 935710753}
   muzzleflash: {fileID: 1510384220}
   recoil: {fileID: 1804353101}
-  gunRaycast: {fileID: 937988020}
   bulletHole: {fileID: 489330201}
   crosshairTransform: {fileID: 0}
   CrosshairCanvas: {fileID: 0}
   crosshair: {fileID: 0}
   cam: {fileID: 330585545}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 937988020}
   animator: {fileID: 1447890097}
   layerMask:
@@ -5636,6 +5671,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
   m_PrefabInstance: {fileID: 2020482}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &917499241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917499231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ba3e4960cb8e440bbe2a3385151df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponInventory
+  weapons: []
+  currentweapon: 0
+  currentGunScript: {fileID: 0}
+  weaponGrip: {fileID: 0}
+  leftHandIK: {fileID: 0}
+  rigBuilder: {fileID: 0}
+  leftHandPosition: {fileID: 0}
+  leftHandTarget: {fileID: 0}
 --- !u!4 &922168594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8044669281949152778, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
@@ -7303,6 +7358,7 @@ GameObject:
   - component: {fileID: 1201277558}
   - component: {fileID: 1201277557}
   - component: {fileID: 1201277556}
+  - component: {fileID: 1201277560}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Enemy
@@ -7418,6 +7474,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201277554}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1201277560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201277554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58be23263249e6b49a3c20ebefa1db24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Suppression
+  suppressionAmount: 0.01
+  weaponInventory: {fileID: 0}
+  currentGunScript: {fileID: 0}
+  suppressionDecayRate: 0.02
+  isSuppressed: 0
+  maxSuppression: 0.15
 --- !u!4 &1204413642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: d13ac7dc82dec2c48aaece7472d20980, type: 3}
@@ -7656,6 +7730,7 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
@@ -7677,13 +7752,13 @@ MonoBehaviour:
   spineAim: {fileID: 0}
   muzzleflash: {fileID: 0}
   recoil: {fileID: 0}
-  gunRaycast: {fileID: 1605507730}
   bulletHole: {fileID: 0}
   crosshairTransform: {fileID: 0}
   CrosshairCanvas: {fileID: 0}
   crosshair: {fileID: 0}
   cam: {fileID: 0}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 0}
   animator: {fileID: 0}
   layerMask:
@@ -8259,6 +8334,7 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
@@ -8280,13 +8356,13 @@ MonoBehaviour:
   spineAim: {fileID: 489700761}
   muzzleflash: {fileID: 978320537}
   recoil: {fileID: 393312734}
-  gunRaycast: {fileID: 1200361986}
   bulletHole: {fileID: 489330201}
   crosshairTransform: {fileID: 0}
   CrosshairCanvas: {fileID: 0}
   crosshair: {fileID: 0}
   cam: {fileID: 330585545}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 1200361986}
   animator: {fileID: 488936179}
   layerMask:
@@ -8841,14 +8917,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297998442}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0013853599, y: -0.57939446, z: 0.029962143, w: 0.81449527}
-  m_LocalPosition: {x: -7.146, y: 0.579, z: -5.067}
+  m_LocalRotation: {x: 0.029986782, y: -0.7730104, z: -0.0006647785, w: -0.633684}
+  m_LocalPosition: {x: -6.1918273, y: 0.59928554, z: -5.7236185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1839985248}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 1.86, y: -70.806, z: 2.891}
+  m_LocalEulerAnglesHint: {x: -2.237, y: -258.636, z: -2.611}
 --- !u!114 &1297998444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9088,7 +9164,7 @@ MonoBehaviour:
   suppressionAmount: 0.01
   weaponInventory: {fileID: 1297998445}
   currentGunScript: {fileID: 0}
-  suppressionDecayRate: 0.001
+  suppressionDecayRate: 0.01
   isSuppressed: 0
   maxSuppression: 0.5
 --- !u!1 &1320528405 stripped
@@ -10118,10 +10194,11 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0.0035
-  decayRate: 0.025
+  decayRate: 0.015
   maxSpread: 0.025
   minSpread: 0.01
   shotsForSpread: 0
@@ -10139,13 +10216,13 @@ MonoBehaviour:
   spineAim: {fileID: 167248624}
   muzzleflash: {fileID: 1247098991}
   recoil: {fileID: 1472146645}
-  gunRaycast: {fileID: 348309372}
   bulletHole: {fileID: 489330201}
   crosshairTransform: {fileID: 2040486930}
   CrosshairCanvas: {fileID: 1094132818}
   crosshair: {fileID: 0}
   cam: {fileID: 330585545}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 1530598982}
   animator: {fileID: 1839985259}
   layerMask:
@@ -10258,6 +10335,7 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
@@ -10279,13 +10357,13 @@ MonoBehaviour:
   spineAim: {fileID: 475415293}
   muzzleflash: {fileID: 1665539689}
   recoil: {fileID: 81903091}
-  gunRaycast: {fileID: 1420233327}
   bulletHole: {fileID: 489330201}
   crosshairTransform: {fileID: 0}
   CrosshairCanvas: {fileID: 0}
   crosshair: {fileID: 0}
   cam: {fileID: 330585545}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 1420233327}
   animator: {fileID: 917499238}
   layerMask:
@@ -10621,8 +10699,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530598978}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.001836347, y: 0.76020694, z: -0.0021487728, w: 0.6496749}
-  m_LocalPosition: {x: -7.7766767, y: 2.147342, z: -5.5086846}
+  m_LocalRotation: {x: -0.0034257108, y: 0.75684875, z: 0.0039670565, w: 0.65356904}
+  m_LocalPosition: {x: -6.8435717, y: 2.150486, z: -6.182041}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11813,7 +11891,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.1041056, z: -0, w: -0.99456626}
   m_LocalPosition: {x: -5.36, y: 1.24, z: -8.16}
-  m_LocalScale: {x: 5.2987294, y: 1.614795, z: 0.83161736}
+  m_LocalScale: {x: 5.2987294, y: 1.2972294, z: 0.83161736}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -12770,31 +12848,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.11377685
+      value: -0.9987017
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.005392753
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.9934633
+      value: 0.050941233
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0075121773
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.926
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -193.063
+      value: -365.84
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.516
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8183481454299698827, guid: 7aeeab5fbe3a6394b820c41ede2712a8, type: 3}
       propertyPath: m_Layer
@@ -13502,6 +13580,7 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
@@ -13523,13 +13602,13 @@ MonoBehaviour:
   spineAim: {fileID: 167248624}
   muzzleflash: {fileID: 56837422}
   recoil: {fileID: 1574075699}
-  gunRaycast: {fileID: 652609751}
   bulletHole: {fileID: 0}
   crosshairTransform: {fileID: 0}
   CrosshairCanvas: {fileID: 0}
   crosshair: {fileID: 0}
   cam: {fileID: 0}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 0}
   animator: {fileID: 0}
   layerMask:
@@ -13622,6 +13701,7 @@ MonoBehaviour:
   Spread: {x: 0, y: 0, z: 0}
   centerPosPixels: {x: 0, y: 0, z: 0}
   radiusPosPixels: {x: 0, y: 0, z: 0}
+  lineToBarrel: {x: 0, y: 0, z: 0}
   pixelDiameter: 0
   bulletSpreadFactor: 0
   bulletSpreadIncrement: 0
@@ -13643,13 +13723,13 @@ MonoBehaviour:
   spineAim: {fileID: 1974858596}
   muzzleflash: {fileID: 213060717}
   recoil: {fileID: 626464257}
-  gunRaycast: {fileID: 1660516969}
   bulletHole: {fileID: 489330201}
   crosshairTransform: {fileID: 0}
   CrosshairCanvas: {fileID: 0}
   crosshair: {fileID: 0}
   cam: {fileID: 330585545}
   suppressionScript: {fileID: 0}
+  aiManager: {fileID: 0}
   raycastObject: {fileID: 1660516969}
   animator: {fileID: 1286579462}
   layerMask:
@@ -14026,6 +14106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58be23263249e6b49a3c20ebefa1db24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Suppression
+--- !u!136 &1988221948 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 9004204267452011481, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+  m_PrefabInstance: {fileID: 1034025544083684363}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1989515417
 GameObject:
   m_ObjectHideFlags: 0
@@ -14936,9 +15021,29 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 113685487936475684, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: hitboxCollider
+      value: 
+      objectReference: {fileID: 1988221948}
+    - target: {fileID: 113685487936475684, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: suppressionScript
       value: 
       objectReference: {fileID: 1988221945}
+    - target: {fileID: 113685487936475684, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: searchLayer.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113685487936475684, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: closestColliderDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 113685487936475684, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Assembly-CSharp::CoverScript
+      objectReference: {fileID: 0}
+    - target: {fileID: 758869008634793655, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2032924468467448983, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
@@ -15005,7 +15110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.20626336
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15013,11 +15118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.0057445
+      value: -7.48
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.02132701
+      value: 0.7917396
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.x
@@ -15025,7 +15130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.99977255
+      value: -0.6108588
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.z
@@ -15037,7 +15142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 537.556
+      value: 644.697
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -15075,6 +15180,10 @@ PrefabInstance:
       propertyPath: bulletHole
       value: 
       objectReference: {fileID: 489330201}
+    - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8870211711110897799, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: timeBetweenBursts
       value: 0.75
@@ -15217,3 +15326,4 @@ SceneRoots:
   - {fileID: 754934520}
   - {fileID: 1287204621}
   - {fileID: 947369809}
+  - {fileID: 695478679}
