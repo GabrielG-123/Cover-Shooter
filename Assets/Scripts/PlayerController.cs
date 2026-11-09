@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI;
+using DG.Tweening;
 
 
 
@@ -630,7 +631,7 @@ public class PlayerController : MonoBehaviour
 
     private void checkForVault() {
 
-        if (Physics.Raycast(raycastOrigin.position - new Vector3(0, 1, 0), playerModel.forward, out hit, 0.5f))
+        if (Physics.Raycast(raycastOrigin.position, playerModel.forward, out hit, 0.5f))
         {
 
 
@@ -707,6 +708,7 @@ public class PlayerController : MonoBehaviour
 
         animator.applyRootMotion = false;
         animator.SetBool("vault", false);
+        transform.position = new Vector3(playerModel.position.x, transform.position.y, playerModel.position.z);
 
 
     }
@@ -999,13 +1001,13 @@ public class PlayerController : MonoBehaviour
         lookAtPosition.z = ThreeDMoveDirection.z;
 
 
-        currentRotation = transform.rotation;
+        currentRotation = playerModel.rotation;
 
         if (isMoving && !animator.GetBool("isAiming"))
         {
 
             Quaternion nextRotation = Quaternion.LookRotation(moveVector, Vector3.up);
-            transform.rotation = Quaternion.Slerp(currentRotation, nextRotation, 3.5f * Time.deltaTime);
+            playerModel.rotation = Quaternion.Slerp(currentRotation, nextRotation, 3.5f * Time.deltaTime);
 
         }
         
@@ -1075,6 +1077,14 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat(MoveZHash, 0);
 
         }
+
+
+        //if (animator.GetBool("vault")) {
+
+        //    transform.position = playerModel.position;
+
+
+        //}
         
 
         playerRight = playerModel.right;
@@ -1106,10 +1116,10 @@ public class PlayerController : MonoBehaviour
 
         SprintDirection = new Vector3(playerModel.forward.x, 0, playerModel.forward.z);
 
-        if (animator.GetBool("vault")){
+        //if (animator.GetBool("vault")){
 
-            return;
-        }
+        //    return;
+        //}
 
 
         ctrlPressed = Keyboard.current.leftCtrlKey.wasPressedThisFrame;
@@ -1266,6 +1276,7 @@ public class PlayerController : MonoBehaviour
 
         CheckForCover();
        Debug.DrawRay(raycastOrigin.position, transform.forward * 0.75f,Color.green);
+        Debug.DrawRay(raycastOrigin.position, playerModel.forward * 0.5f, Color.magenta);
        // Debug.DrawRay(hit.point, hit.normal * 2.0f, Color.red);
       // Debug.DrawRay(cameraObject.position, cameraObject.forward * 10.5f, Color.blue);
        // Debug.DrawRay(thirdPersonCamera.position, thirdPersonCamera.forward * 8.0f, Color.red);

@@ -161,6 +161,7 @@
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\FlyAround.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Samples\Input System\1.11.2\Simple Demo\SimpleController_UsingPlayerInput.cs" />
+    <Compile Include="Assets\Scripts\EventsForwarder.cs" />
     <Compile Include="Assets\Scripts\AttackState.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
     <Compile Include="Assets\UnityTechnologies\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
