@@ -24,18 +24,28 @@ public class ShootingState : State
     public override void OnEnter()
     {
 
-        Debug.Log("Entering shooting state");
+       // Debug.Log("Entering shooting state");
         rotationTimer = manager.attackState.aimingState.rotationTimer;
         manager.agent.ResetPath();
-        //   Debug.Log("Entering shooting state");
+        Debug.Log("Entering shooting state");
         manager.animator.SetBool("isAiming", true);
         manager.animator.SetBool("isShooting", true);
         manager.agent.speed = 2.5f;
         //manager.firing = true;
 
 
+        if (!manager.coverScript.inCover)
+        {
+            manager.RigLayers[0].active = true;
+            manager.myGun.leftHandIK.weight = 1f;
+            manager.myGun.gunAimConstraint.weight = manager.myGun.initialgunAimWeight;
+            Debug.Log("Changing weights");
 
-        manager.RigLayers[0].active = true;
+            manager.myGun.RightShoulderAimConstraint.weight = manager.myGun.initialRightShoulderWeight;
+            var sourcesEnd = manager.myGun.spineAim.data.sourceObjects;
+            sourcesEnd.SetWeight(0, 1);
+            manager.myGun.spineAim.data.sourceObjects = sourcesEnd;
+        }
     }
 
 
@@ -70,7 +80,7 @@ public class ShootingState : State
         }
         else 
         {
-            // 2. Check if the agent has physically arrived at the point
+            // 2. Check if the  has physically arrived at the point
             if (!manager.agent.pathPending && manager.agent.remainingDistance <= manager.agent.stoppingDistance)
             {
                 if (!arrivedAtAggroPoint)
@@ -186,15 +196,7 @@ public class ShootingState : State
 
 
 
-        if (manager.myGun.ammoInClip == 0 && manager.myGun.ammoReserve != 0)
-        {
-
-          
-            
-            manager.myGun.reload(1);
-
-
-        }
+       
 
         //if (manager.healthScript.health <= 50) {
 
@@ -246,7 +248,7 @@ public class ShootingState : State
 
                 }
 
-
+                
 
 
 
@@ -270,6 +272,18 @@ public class ShootingState : State
            //return manager.patrolState;
         
         
+        }
+
+
+        if (manager.myGun.ammoInClip == 0 && manager.myGun.ammoReserve != 0)
+        {
+
+
+
+            manager.myGun.reload(1);
+            return manager.attackState.reloadingState;
+
+
         }
 
         return this;

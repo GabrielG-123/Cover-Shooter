@@ -13,10 +13,27 @@ public class ReloadingState : State
     {
 
 
-      //  manager.myGun.reload();
-        
-        
-        return this;
+        if (manager.animator.GetBool("isReloading"))
+        {
+            if (manager.coverScript.CheckCoverConditions() && !manager.coverScript.inCover)
+            {
+                if (!manager.coverScript.isAggro)
+                {
+                    Debug.Log("I am moving to cover as agent: " + manager.transform.name);
+                    manager.coverScript.MovingToCover();
+
+                }
+
+            }
+            return this;
+        }
+
+
+
+        return manager.attackState.aimingState;
+
+
+
 
     }
 }

@@ -62,9 +62,9 @@ public class Gun : MonoBehaviour
     public MultiAimConstraint gunAimConstraint;
     public MultiAimConstraint RightShoulderAimConstraint;
     public MultiAimConstraint spineAim;
-    float initialgunAimWeight;
-    float initialRightShoulderWeight;
-    float initialSpineAimWeight;
+    public float initialgunAimWeight;
+   public float initialRightShoulderWeight;
+    public float initialSpineAimWeight;
 
 
     // bool canShoot;
@@ -412,14 +412,14 @@ public class Gun : MonoBehaviour
         float animationLength = animator.GetCurrentAnimatorStateInfo(layerIndex).length;
         yield return new WaitForSeconds(animationLength - 0.25f);
        
-        leftHandIK.weight = 1f;
-        gunAimConstraint.weight = initialgunAimWeight;
+       // leftHandIK.weight = 1f;
+       //gunAimConstraint.weight = initialgunAimWeight;
         Debug.Log("Changing weights");
 
-        RightShoulderAimConstraint.weight = initialRightShoulderWeight;
-        var sourcesEnd = spineAim.data.sourceObjects;
-        sourcesEnd.SetWeight(0, 1);
-        spineAim.data.sourceObjects = sourcesEnd;
+       // RightShoulderAimConstraint.weight = initialRightShoulderWeight;
+       // var sourcesEnd = spineAim.data.sourceObjects;
+      //  sourcesEnd.SetWeight(0, 1);
+       // spineAim.data.sourceObjects = sourcesEnd;
 
 
 

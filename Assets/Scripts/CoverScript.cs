@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -114,7 +115,7 @@ public class CoverScript : MonoBehaviour
                 reenterCoverTimer = 0;
             }
         }
-
+        whileInCover();
         FindCoverSpace();
     }
 
@@ -381,16 +382,74 @@ public class CoverScript : MonoBehaviour
         manager.animator.SetBool("isShooting", false);
         manager.animator.SetBool("strafing", false);
 
-        if (playerAngle > 0f && (coverAngle <= -0.99f))
+        //if (playerAngle > 0f && (coverAngle <= -0.99f))
+        //{
+        //    manager.animator.SetBool("shouldMirror", true);
+        //}
+
+        //if (playerAngle < 0f && coverAngle >= 0.99f)
+        //{
+        //    manager.animator.SetBool("shouldMirror", true);
+        //}
+    }
+
+    public void whileInCover() {
+
+        if (inCover)
         {
-            manager.animator.SetBool("shouldMirror", true);
+            if (playerAngle > 0f && (coverAngle <= -0.99f))
+            {
+                manager.animator.SetBool("shouldMirror", true);
+            }
+
+            else if (playerAngle < 0f && coverAngle >= 0.99f)
+            {
+                manager.animator.SetBool("shouldMirror", true);
+            }
+
+            else
+            {
+
+
+                manager.animator.SetBool("shouldMirror", false);
+
+            }
+
+            if (!manager.animator.GetBool("isAiming") || !manager.animator.GetBool("isShooting"))
+            {
+                var sources = manager.myGun.spineAim.data.sourceObjects;
+                sources.SetWeight(0, 0.1f);
+                manager.myGun.spineAim.data.sourceObjects = sources;
+
+                manager.myGun.gunAimConstraint.weight = 0f;
+                manager.myGun.RightShoulderAimConstraint.weight = 0f;
+
+
+
+            }
+
+            else
+            {
+
+                Debug.Log("This should be happening right now");
+                //manager.RigLayers[0].active = true;
+                manager.myGun.leftHandIK.weight = 1f;
+                manager.myGun.gunAimConstraint.weight = manager.myGun.initialgunAimWeight;
+                Debug.Log("Changing weights");
+
+                manager.myGun.RightShoulderAimConstraint.weight = manager.myGun.initialRightShoulderWeight;
+                var sourcesEnd = manager.myGun.spineAim.data.sourceObjects;
+                sourcesEnd.SetWeight(0, 1);
+                manager.myGun.spineAim.data.sourceObjects = sourcesEnd;
+
+            }
+
+
+
         }
 
-        if (playerAngle < 0f && coverAngle >= 0.99f)
-        {
-            manager.animator.SetBool("shouldMirror", true);
-        }
     }
+
 
     public void ExitCover()
     {

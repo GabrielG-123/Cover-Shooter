@@ -1250,7 +1250,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1107 &-687807788796382939
 AnimatorStateMachine:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1378,7 +1378,7 @@ AnimatorController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SoldierController
-  serializedVersion: 5
+  serializedVersion: 6
   m_AnimatorParameters:
   - m_Name: isWalking
     m_Type: 4
@@ -1525,6 +1525,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+  m_EvaluateTransitionsOnStart: 0
 --- !u!1101 &42172880543102990
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1899,7 +1900,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1107 &2987240502387130817
 AnimatorStateMachine:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2036,7 +2037,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1107 &3165416663071265003
 AnimatorStateMachine:
-  serializedVersion: 6
+  serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2087,7 +2088,7 @@ AnimatorStateMachine:
     m_Position: {x: 1760, y: 1140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4854209036507689542}
-    m_Position: {x: 1570, y: 1320, z: 0}
+    m_Position: {x: 1320, y: 1450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1530257196924249677}
     m_Position: {x: -890, y: 160, z: 0}

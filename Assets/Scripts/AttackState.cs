@@ -37,9 +37,9 @@ public class AttackState : State
     {
         Debug.Log("The current substate is: " + currentSubState);
         State nextSubState = currentSubState?.RunCurrentState();
+        Debug.Log("The next substate is: " + nextSubState);
 
 
-      
 
         if (nextSubState != null && nextSubState != currentSubState)
         {
@@ -66,10 +66,16 @@ public class AttackState : State
 
         }
 
+        //else if (nextSubState == null)
+        //{
+        //    Debug.Log("The next substate is null");
+        //  //  currentSubState = null;
+        //    return null;
+            
+        //}
 
-        
-        
-        return this;
+
+            return this;
 
         
     }

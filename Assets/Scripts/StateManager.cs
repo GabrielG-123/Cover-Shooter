@@ -85,6 +85,7 @@ public class StateManager : MonoBehaviour
 
         MoveXHash = Animator.StringToHash("MoveX");
         MoveZHash = Animator.StringToHash("MoveZ");
+            
     }
 
 
