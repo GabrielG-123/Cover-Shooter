@@ -380,6 +380,7 @@ public class CoverScript : MonoBehaviour
         }
 
         manager.animator.SetBool("isShooting", false);
+        
         manager.animator.SetBool("strafing", false);
 
         //if (playerAngle > 0f && (coverAngle <= -0.99f))
@@ -413,6 +414,15 @@ public class CoverScript : MonoBehaviour
 
                 manager.animator.SetBool("shouldMirror", false);
 
+            }
+
+
+            if (!manager.animator.GetBool("isPeeking") && !coverShooting) {
+
+                manager.animator.SetBool("isAiming", false);
+                manager.animator.SetBool("isShooting", false);
+                    
+            
             }
 
             if (!manager.animator.GetBool("isAiming") || !manager.animator.GetBool("isShooting"))
@@ -632,7 +642,8 @@ public class CoverScript : MonoBehaviour
                 {
                     manager.animator.SetBool("isPeeking", false);
                     manager.animator.SetBool("isShooting", false);
-                    manager.animator.SetLayerWeight(1, 0f);
+                    
+                    
                     manager.RigLayers[0].active = false;
                     coverPeek = false;
 

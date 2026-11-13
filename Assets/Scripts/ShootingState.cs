@@ -28,8 +28,11 @@ public class ShootingState : State
         rotationTimer = manager.attackState.aimingState.rotationTimer;
         manager.agent.ResetPath();
         Debug.Log("Entering shooting state");
-        manager.animator.SetBool("isAiming", true);
-        manager.animator.SetBool("isShooting", true);
+        if (manager.animator.GetBool("isPeeking") || !manager.coverScript.inCover)
+        {
+            manager.animator.SetBool("isAiming", true);
+            manager.animator.SetBool("isShooting", true);
+        }
         manager.agent.speed = 2.5f;
         //manager.firing = true;
 
@@ -216,7 +219,7 @@ public class ShootingState : State
         }
 
          
-        if (manager.firing == true && manager.animator.GetBool("isShooting"))
+        if (manager.animator.GetBool("isShooting"))
         {
             
 
@@ -237,6 +240,7 @@ public class ShootingState : State
 
             else
             {
+                Debug.Log("We are in the else branch");
                 timeSinceLastShot += Time.deltaTime;
                 if (timeSinceLastShot >= manager.myGun.timeBetweenBursts)
                 {
@@ -295,7 +299,6 @@ public class ShootingState : State
         manager.animator.SetBool("isAiming", false);
         manager.animator.SetBool("strafing", false);
         manager.animator.SetBool("isShooting", false);
-        manager.firing = false;
       manager.RigLayers[0].active = false;
     
     }

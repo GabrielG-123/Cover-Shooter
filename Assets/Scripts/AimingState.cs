@@ -47,6 +47,9 @@ public override State RunCurrentState()
         
         manager.agent.transform.rotation = Quaternion.Slerp(manager.agent.transform.rotation, manager.targetRotation, rotationTimer / timeToTurn);
 
+
+
+
         if (Vector3.Distance(manager.agent.transform.position, manager.player.transform.position) <= 30.0f)
         {
 

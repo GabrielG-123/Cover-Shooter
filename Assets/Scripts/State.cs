@@ -106,12 +106,12 @@ public abstract class State
 
     }
 
-    public virtual void promximityAlert()
+    public virtual void proximityAlert()
     {
 
         Collider[] colliders = new Collider[50];
 
-        int numColliders = Physics.OverlapSphereNonAlloc(_manager.transform.position, 20.0f, colliders, _manager.coverScript.searchLayer);
+        int numColliders = Physics.OverlapSphereNonAlloc(_manager.transform.position, 20.0f, colliders, _manager.searchLayer);
 
         for (int i = 0; i < numColliders; i++)
         {

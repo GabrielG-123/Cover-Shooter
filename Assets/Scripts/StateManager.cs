@@ -20,6 +20,7 @@ public class StateManager : MonoBehaviour
     public Vector3 direction;
     public Vector3 localVelocity;
     public Quaternion targetRotation;
+    public LayerMask searchLayer;
     public float coneAngle;
     public float distanceFromPlayer;
     public bool inLOS;
@@ -250,7 +251,7 @@ public class StateManager : MonoBehaviour
 
         }
         inLOS = currentState.visionCone();
-        currentState.promximityAlert();
+        currentState.proximityAlert();
 
         Debug.Log("The current state running is: " + currentState);
     }

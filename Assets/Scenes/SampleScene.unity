@@ -1040,7 +1040,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109737941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030287407, y: 0.789225, z: -0.03905095, w: 0.6121125}
+  m_LocalRotation: {x: 0.030301735, y: 0.7889997, z: -0.039039765, w: 0.6124028}
   m_LocalPosition: {x: -7.5599213, y: 2.2381392, z: -5.836184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1933,7 +1933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030287404, y: 0.789225, z: -0.039050955, w: 0.61211246}
+  m_LocalRotation: {x: 0.030301733, y: 0.7889997, z: -0.03903976, w: 0.6124028}
   m_LocalPosition: {x: -7.5599213, y: 2.2381392, z: -5.836184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5215,6 +5215,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 1982494410}
   RightShoulderAimConstraint: {fileID: 2108987819}
   spineAim: {fileID: 935710753}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 1510384220}
   recoil: {fileID: 1804353101}
   bulletHole: {fileID: 489330201}
@@ -7750,6 +7753,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 0}
   RightShoulderAimConstraint: {fileID: 0}
   spineAim: {fileID: 0}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 0}
   recoil: {fileID: 0}
   bulletHole: {fileID: 0}
@@ -8354,6 +8360,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 1550341661}
   RightShoulderAimConstraint: {fileID: 1040288150}
   spineAim: {fileID: 489700761}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 978320537}
   recoil: {fileID: 393312734}
   bulletHole: {fileID: 489330201}
@@ -10214,6 +10223,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 2018673215}
   RightShoulderAimConstraint: {fileID: 1956497815}
   spineAim: {fileID: 167248624}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 1247098991}
   recoil: {fileID: 1472146645}
   bulletHole: {fileID: 489330201}
@@ -10355,6 +10367,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 690802036}
   RightShoulderAimConstraint: {fileID: 1650053493}
   spineAim: {fileID: 475415293}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 1665539689}
   recoil: {fileID: 81903091}
   bulletHole: {fileID: 489330201}
@@ -13622,6 +13637,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 2018673215}
   RightShoulderAimConstraint: {fileID: 1956497815}
   spineAim: {fileID: 167248624}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 56837422}
   recoil: {fileID: 1574075699}
   bulletHole: {fileID: 0}
@@ -13743,6 +13761,9 @@ MonoBehaviour:
   gunAimConstraint: {fileID: 1819628826}
   RightShoulderAimConstraint: {fileID: 1791114924}
   spineAim: {fileID: 1974858596}
+  initialgunAimWeight: 0
+  initialRightShoulderWeight: 0
+  initialSpineAimWeight: 0
   muzzleflash: {fileID: 213060717}
   recoil: {fileID: 626464257}
   bulletHole: {fileID: 489330201}
@@ -15064,13 +15085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 758869008634793655, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tTransform
-        'mixamorig:LeftArm'\n\tTransform 'mixamorig:RightHand'\n\tTransform 'mixamorig:RightShoulder'\n\tTransform
-        'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
-        'mixamorig:Spine'\n\tTransform 'mixamorig:LeftHand'\n\tTransform 'mixamorig:Spine1'\n\tand
-        more ..."
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2032924468467448983, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
@@ -15124,6 +15139,26 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 949846782}
+    - target: {fileID: 5151662094113401383, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9998369
+      objectReference: {fileID: 0}
+    - target: {fileID: 5151662094113401383, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 6.9849193e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5151662094113401383, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.018063381
+      objectReference: {fileID: 0}
+    - target: {fileID: 5151662094113401383, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 7.003109e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5151662094113401383, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -2.07
+      objectReference: {fileID: 0}
     - target: {fileID: 5597790125832040661, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_Speed
       value: 2.5
@@ -15150,7 +15185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7917396
+      value: -0.80918145
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.x
@@ -15158,7 +15193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6108588
+      value: 0.58755887
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalRotation.z
@@ -15170,7 +15205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 644.697
+      value: 1008.032
       objectReference: {fileID: 0}
     - target: {fileID: 6658615493731488973, guid: 823d7c47ff7c9b245bddf04467029453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
