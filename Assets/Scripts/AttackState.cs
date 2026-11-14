@@ -4,23 +4,44 @@ public class AttackState : State
 {
     public StateManager manager;
    public State currentSubState;
-    public State currentCoverState;
+    public State currentCombatState;
+    public State currentMovementState;
     public AimingState aimingState;
-    //public CoverState coverState;
     public ReloadingState reloadingState;
     public ShootingState shootingState;
-    
+    public CoverIdleState coverIdleState;
+    public AggroMovementState aggroMovementState;
+    public StandingCombatIdle standingCombatIdle;
+    public MovingToCover movingToCover;
+    public PeekingState peekingState;
 
     public AttackState(StateManager stateManager) : base(stateManager)
     {
         manager = stateManager;
+
+        //combat states
         aimingState = new AimingState(stateManager);
-      //  coverState = new CoverState(stateManager);
         reloadingState = new ReloadingState(stateManager);
         shootingState = new ShootingState(stateManager);
 
+        //movement states
+        coverIdleState = new CoverIdleState(stateManager);
+        aggroMovementState = new AggroMovementState(stateManager);
+        standingCombatIdle  = new StandingCombatIdle(stateManager);
+        movingToCover = new MovingToCover(stateManager);
+        peekingState = new PeekingState(stateManager);
 
-        
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -28,6 +49,8 @@ public class AttackState : State
     public override void OnEnter()
     {
         manager.attacking = true;
+        currentCombatState = aimingState;
+        currentMovementState = standingCombatIdle;
         currentSubState = aimingState;
         currentSubState.OnEnter();
        // currentCoverState = coverState;
@@ -37,6 +60,9 @@ public class AttackState : State
     {
         Debug.Log("The current substate is: " + currentSubState);
         State nextSubState = currentSubState?.RunCurrentState();
+
+        State nextMovementState = currentMovementState?.RunCurrentState();
+        State nextCombatState = currentCombatState?.RunCurrentState();
         Debug.Log("The next substate is: " + nextSubState);
 
 
@@ -105,3 +131,4 @@ public class AttackState : State
     
     }
 }
+

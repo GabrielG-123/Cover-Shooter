@@ -43,6 +43,7 @@ public class CoverScript : MonoBehaviour
     public bool isDefensive;
     public bool coverSpaces;
     public bool findNewSpace;
+
     private bool hasStartedMoving;
     public float playerAngle;
     public float coverAngle;

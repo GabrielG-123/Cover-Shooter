@@ -67,9 +67,11 @@
   <ItemGroup>
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\SimplePlayerOnSurface.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\Scripts\CoverIdleState.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\SamplesDynamicUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\Scripts\AggroMovementState.cs" />
     <Compile Include="Assets\Scripts\HitboxDamage.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\SimplePlayerController2D.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\SimplePlayerController.cs" />
     <Compile Include="Assets\Scripts\FrameRateLimiter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\Scripts\PeekingState.cs" />
     <Compile Include="Assets\Scripts\Suppression.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\ThirdPersonFollowCameraSideSwapper.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\StarterAssets\Mobile\Scripts\VirtualInputs\UIVirtualButton.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\MovingToCover.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\UnityTechnologies\EffectExamples\Shared\Scripts\GunAim.cs" />
@@ -186,6 +190,7 @@
     <Compile Include="Assets\Samples\Input System\1.11.2\Simple Demo\SimpleController_UsingState.cs" />
     <Compile Include="Assets\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\RunnerController.cs" />
+    <Compile Include="Assets\Scripts\StandingCombatIdle.cs" />
     <Compile Include="Assets\Scripts\ReloadingState.cs" />
     <Compile Include="Assets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
     <Compile Include="Assets\Samples\Cinemachine\3.1.4\Shared Assets\Scripts\SamplesHelpUI.cs" />
