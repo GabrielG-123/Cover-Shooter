@@ -15,20 +15,20 @@ public class CoverScript : MonoBehaviour
     private float currentColliderDistance;
     private float coverOffset;
     private float distMagnitude;
-    private Vector3 directionToCover;
+    public Vector3 directionToCover;
     private Vector3 directionToPlayer;
     public RaycastHit coverHit;
     public RaycastHit hit;
     public Vector3 coverPoint;
     public Vector3 closestPoint;
     public Vector3 coverCenter;
-    private Vector3 distanceToCover;
-    private Vector3 oppositeNormal;
+    public Vector3 distanceToCover;
+    public Vector3 oppositeNormal;
     private Vector3 leftSideDistance;
     private Vector3 rightSideDistance;
     private Vector3 coverDestination;
-    private Quaternion coverRotation;
-    private Collider closestCover = null;
+    public Quaternion coverRotation;
+    public Collider closestCover = null;
     public bool foundCover = false;
     public bool inCover = false;
     public bool exitingCover;
@@ -39,12 +39,12 @@ public class CoverScript : MonoBehaviour
     public bool startCoverTimer;
     public bool canTakeCover = true;
     public bool alreadyTookCover = false;
-    public bool isAggro;
+   // public bool isAggro;
     public bool isDefensive;
     public bool coverSpaces;
     public bool findNewSpace;
 
-    private bool hasStartedMoving;
+    public bool hasStartedMoving;
     public float playerAngle;
     public float coverAngle;
     public float coverTimer;
@@ -81,9 +81,9 @@ public class CoverScript : MonoBehaviour
 
     private void Update()
     {
-        arrivedAtAggroPoint = manager.attackState.shootingState.arrivedAtAggroPoint;
-        aggroTimer = manager.attackState.shootingState.aggroTimer;
-        aggroDuration = manager.attackState.shootingState.aggroDuration;
+        //arrivedAtAggroPoint = manager.attackState.shootingState.arrivedAtAggroPoint;
+        //aggroTimer = manager.attackState.shootingState.aggroTimer;
+        //aggroDuration = manager.attackState.shootingState.aggroDuration;
 
         if (Physics.Raycast(manager.head.position, manager.direction, out hit, 15))
         {
@@ -116,8 +116,8 @@ public class CoverScript : MonoBehaviour
                 reenterCoverTimer = 0;
             }
         }
-        whileInCover();
-        FindCoverSpace();
+       // whileInCover();
+        //FindCoverSpace();
     }
 
     public bool CheckCoverConditions()
@@ -148,12 +148,12 @@ public class CoverScript : MonoBehaviour
         return false;
     }
 
-    private void FindCoverSpace()
+    public Vector3 FindCoverSpace()
     {
         // Do not constantly search for new space if the agent is already comfortably in cover
         if (!foundCover || closestCover == null || inCover || !hasStartedMoving)
         {
-            return;
+            return navHit.position;
         }
 
         Debug.Log("Finding cover space for agent: " + manager.transform.name);
@@ -174,7 +174,7 @@ public class CoverScript : MonoBehaviour
 
         if (!findNewSpace)
         {
-            return;
+           return navHit.position;
         }
 
         Vector3 coverOrientation = navHit.position - closestCover.bounds.center;
@@ -209,7 +209,7 @@ public class CoverScript : MonoBehaviour
             closestCover = null;
             foundCover = false;
             FindCover();
-            return;
+           // return;
         }
 
         for (int i = 1; i <= maxSpaceIntervals; i++)
@@ -222,9 +222,9 @@ public class CoverScript : MonoBehaviour
             {
                 if (!Physics.CheckSphere(positivePos, 0.4f, searchLayer))
                 {
-                    manager.agent.destination = positivePos;
+                   // manager.agent.destination = positivePos;
                     navHit.position = positivePos;
-                    return;
+                    return navHit.position;
                 }
             }
 
@@ -235,9 +235,9 @@ public class CoverScript : MonoBehaviour
             {
                 if (!Physics.CheckSphere(negativePos, 0.4f, searchLayer))
                 {
-                    manager.agent.destination = negativePos;
+                    //manager.agent.destination = negativePos;
                     navHit.position = negativePos;
-                    return;
+                    return navHit.position;
                 }
             }
         }
@@ -249,9 +249,13 @@ public class CoverScript : MonoBehaviour
         closestCover = null;
         foundCover = false;
         FindCover();
+
+
+
+        return navHit.position;
     }
 
-    public void FindCover()
+    public Vector3 FindCover()
     {
         Debug.Log("Find cover is being called");
 
@@ -307,13 +311,15 @@ public class CoverScript : MonoBehaviour
             if (NavMesh.SamplePosition(closestPoint, out navHit, 4.0f, NavMesh.AllAreas))
             {
                 Debug.Log("We have found a valid NavMesh position for the agent to move to");
-                manager.agent.destination = navHit.position;
+               // manager.agent.destination = navHit.position;
 
                 Debug.Log("The navHit position is: " + navHit.position + "And the cover destination is: " + manager.agent.destination);
 
                 coverDestination = navHit.position;
                 hasStartedMoving = false;
                 foundCover = true;
+
+                return coverDestination;
             }
         }
         else
@@ -328,6 +334,9 @@ public class CoverScript : MonoBehaviour
                 manager.agent.ResetPath();
             }
         }
+
+        return transform.position;
+        
     }
 
     public void EnterCover()
@@ -375,10 +384,10 @@ public class CoverScript : MonoBehaviour
         {
             manager.animator.SetLayerWeight(1, 1f);
         }
-        else
-        {
-            manager.animator.SetLayerWeight(1, 0f);
-        }
+        //else
+        //{
+        //    manager.animator.SetLayerWeight(1, 0f);
+        //}
 
         manager.animator.SetBool("isShooting", false);
         
@@ -510,62 +519,62 @@ public class CoverScript : MonoBehaviour
         }
     }
 
-    public void MovingToCover()
-    {
-        //Debug.Log("This is now running for agent: " + manager.transform.name);
-        Debug.Log("Moving to cover is being called");
-        rotationTimer += Time.deltaTime;
+    //public void MovingToCover()
+    //{
+    //    //Debug.Log("This is now running for agent: " + manager.transform.name);
+    //    Debug.Log("Moving to cover is being called");
+    //    rotationTimer += Time.deltaTime;
 
-        if (inCover == true)
-        {
-            manager.agent.updateRotation = false;
-        }
-        else
-        {
-            manager.agent.transform.rotation = Quaternion.Slerp(manager.agent.transform.rotation, manager.targetRotation, rotationTimer / timeToTurn);
-        }
+    //    //if (inCover == true)
+    //    //{
+    //    //    manager.agent.updateRotation = false;
+    //    //}
+    //    //else
+    //    //{
+    //    //    manager.agent.transform.rotation = Quaternion.Slerp(manager.agent.transform.rotation, manager.targetRotation, rotationTimer / timeToTurn);
+    //    //}
 
-        if (inCover == true && enteringCover == false)
-        {
-            manager.agent.updateRotation = true;
-        }
+    //    //if (inCover == true && enteringCover == false)
+    //    //{
+    //    //    manager.agent.updateRotation = true;
+    //    //}
 
-        Debug.DrawRay(manager.player.transform.position, directionToCover * 5.0f, Color.green);
+    //    Debug.DrawRay(manager.player.transform.position, directionToCover * 5.0f, Color.green);
 
-        if (!hasStartedMoving) { 
-            if(manager.agent.velocity.magnitude > 0.1f)
-            {
+    //    if (!hasStartedMoving) { 
+    //        if(manager.agent.velocity.magnitude > 0.1f)
+    //        {
                
-                hasStartedMoving = true;
-            }
+    //            hasStartedMoving = true;
+    //        }
 
-            return;
+    //        return;
 
 
-        }
+    //    }
 
         
-        if (hasStartedMoving &&  manager.agent.remainingDistance <= manager.agent.stoppingDistance && !manager.agent.pathPending)
-        {
-            Debug.Log("This is currently running for agent: " + manager.transform.name);
-            if (closestCover == null) return;
-            distanceToCover = closestCover.transform.position - manager.transform.position;
+    //    if (hasStartedMoving &&  manager.agent.remainingDistance <= manager.agent.stoppingDistance && !manager.agent.pathPending)
+    //    {
+    //        Debug.Log("This is currently running for agent: " + manager.transform.name);
+    //        if (closestCover == null) return;
+    //        distanceToCover = closestCover.transform.position - manager.transform.position;
 
-            if (Physics.Raycast(manager.agent.transform.position, distanceToCover, out coverHit, 5.0f))
-            {
-                oppositeNormal = -coverHit.normal;
-                coverRotation = Quaternion.LookRotation(oppositeNormal, Vector3.up);
-                Debug.Log("Doing this currently");
-                manager.animator.SetBool("takeCover", true);
-                Debug.Log("Yup, true");
-                inCover = true;
-            }
-        }
-        else
-        {
-            Debug.Log("This is now running for the agent: " + manager.transform.name);
-        }
-    }
+    //        if (Physics.Raycast(manager.agent.transform.position, distanceToCover, out coverHit, 5.0f))
+    //        {
+    //            oppositeNormal = -coverHit.normal;
+    //            coverRotation = Quaternion.LookRotation(oppositeNormal, Vector3.up);
+    //            Debug.Log("Doing this currently");
+    //            manager.animator.SetBool("takeCover", true);
+    //            Debug.Log("Yup, true");
+    //            inCover = true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("This is now running for the agent: " + manager.transform.name);
+    //    }
+    //}
 
     public void coverShootCheck()
     {

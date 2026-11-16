@@ -50,27 +50,47 @@ public class AttackState : State
     {
         manager.attacking = true;
         currentCombatState = aimingState;
-        currentMovementState = standingCombatIdle;
-        currentSubState = aimingState;
-        currentSubState.OnEnter();
+        currentMovementState = aggroMovementState;
+       // currentSubState = aimingState;
+       // currentSubState.OnEnter();
+        currentMovementState.OnEnter();
+        currentCombatState.OnEnter();
+        
        // currentCoverState = coverState;
     }
 
     public override State RunCurrentState()
     {
-        Debug.Log("The current substate is: " + currentSubState);
-        State nextSubState = currentSubState?.RunCurrentState();
+        Debug.Log("The current movementstate is: " + currentMovementState);
+        Debug.Log("The current combatState is: " + currentCombatState);
+      //  State nextSubState = currentSubState?.RunCurrentState();
 
         State nextMovementState = currentMovementState?.RunCurrentState();
         State nextCombatState = currentCombatState?.RunCurrentState();
-        Debug.Log("The next substate is: " + nextSubState);
+        //Debug.Log("The next substate is: " + nextSubState);
 
 
 
-        if (nextSubState != null && nextSubState != currentSubState)
-        {
+        //if (nextSubState != null && nextSubState != currentSubState)
+        //{
 
-            SwitchSubStates(nextSubState);
+        //    SwitchSubStates(nextSubState);
+        //}
+
+        if (nextMovementState != null && nextMovementState != currentMovementState) {
+
+            SwitchMovementStates(nextMovementState);
+            
+
+
+        }
+
+        if (nextCombatState != null && nextCombatState != currentCombatState) {
+
+
+
+            SwitchCombatStates(nextCombatState);
+        
         }
         //else if (manager.isAlerted == false)
         //{
@@ -86,7 +106,8 @@ public class AttackState : State
         else if (manager.onSearch == true)
         {
 
-            currentSubState.OnExit();
+            currentCombatState.OnExit();
+            currentMovementState.OnExit();
 
             return manager.searchState;
 
@@ -119,13 +140,33 @@ public class AttackState : State
     
     }
 
+    private void SwitchMovementStates(State nextMovementState) {
+        currentMovementState.OnExit();
+        currentMovementState = nextMovementState;
+        currentMovementState.OnEnter();
+    
+    }
+
+    private void SwitchCombatStates(State nextCombatState) {
+
+
+        currentCombatState.OnExit();
+        currentCombatState = nextCombatState;
+        currentCombatState.OnEnter();
+    
+    
+    }
 
 
     public override void OnExit() {
 
         Debug.Log("Exiting attack");
-        currentSubState.OnExit();
-        currentSubState = null;
+        currentCombatState.OnExit();
+        currentMovementState.OnExit();
+
+        currentCombatState = null;
+        currentMovementState = null;
+        
         manager.attacking = false;
     
     

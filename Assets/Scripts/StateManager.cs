@@ -34,6 +34,15 @@ public class StateManager : MonoBehaviour
     public float xSpeed;
     public float zSpeed;
     [SerializeField] float remainingDistance;
+    public bool hasPreviousPath = false;
+    public bool arrivedAtAggroPoint;
+    public Vector3 aggroPoint;
+    public float aggroTimer;
+    public float aggroDuration;
+
+
+
+
 
     public Transform testCover;
 
@@ -72,6 +81,7 @@ public class StateManager : MonoBehaviour
 
         currentState = idleState;
 
+        currentState.OnEnter();
 
         RigLayers = RigBuilder.layers;
 

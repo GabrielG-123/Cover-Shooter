@@ -15,14 +15,14 @@ public class CoverIdleState : State
         if (manager.coverScript.coverShooting) {
 
             manager.RigLayers[0].active = false;
-
+            manager.animator.SetLayerWeight(1, 1f);
 
 
           }
 
         if (manager.coverScript.coverPeek) { 
         
-                    return manager.attackState.peekingState;
+             return manager.attackState.peekingState;
 
 
 

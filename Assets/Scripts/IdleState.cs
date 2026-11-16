@@ -17,11 +17,13 @@ public class IdleState : State
     public override void OnEnter()
     {
         manager.animator.SetBool("isIdle", true);
+        Debug.Log("Running OnEnter for the IdleState");
     }
 
 
     public override State RunCurrentState()
     {
+
 
        // Debug.Log("This state is running constantly");
         idleTime += Time.deltaTime;
